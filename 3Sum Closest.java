@@ -12,6 +12,9 @@ public class Solution {
                 if(k < j + 1){
                     k = j + 1;
                 }
+    			if(k + 1 < len && Math.abs(value - num[k + 1]) < Math.abs(value - num[k])){
+					k++;
+				}
                 value -= num[k];
                 if(Math.abs(value) < Math.abs(min)){
                     min = value;
