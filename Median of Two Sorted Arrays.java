@@ -1,5 +1,5 @@
 public class Solution {
-    public double findMedianSortedArrays(int A[], int B[]) {
+	public double findMedianSortedArrays(int A[], int B[]) {
 		// Start typing your Java solution below
 		// DO NOT write main() function
 		int m = A.length;
@@ -25,20 +25,18 @@ public class Solution {
 				return Math.max(a[as], b[bs]);
 			}
 		}
-		if(k == m + n){
+		if (k == m + n) {
 			return Math.max(a[ae - 1], b[be - 1]);
 		}
 		float ratio = k * m * 1f / (m + n);
-		int median1 = Math.round(m * ratio);
-		median1 = fit(median1, 0, m - 1);
-		median1 = fit(median1, k - 1 - n, k - 1);
-		int median2 = k - 1 - median1;
-		if (a[as + median1] > b[bs + median2]) {
-			return findKth(a, as, as + median1, b, bs + median2, be, k
-					- median2);
+		int i = Math.round(m * ratio);
+		i = fit(i, 0, m - 1);
+		i = fit(i, k - 1 - n, k - 1);
+		int j = k - 1 - i;
+		if (a[as + i] > b[bs + j]) {
+			return findKth(a, as, as + i, b, bs + j, be, k - j);
 		} else {
-			return findKth(a, as + median1, ae, b, bs, bs + median2, k
-					- median1);
+			return findKth(a, as + i, ae, b, bs, bs + j, k - i);
 		}
 	}
 
@@ -50,5 +48,4 @@ public class Solution {
 		else
 			return a;
 	}
-
 }
