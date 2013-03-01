@@ -1,5 +1,4 @@
 public class Solution {
-    int[][] scramble;
 
 	public boolean isScramble(String s1, String s2) {
 		// Start typing your Java solution below
@@ -9,7 +8,6 @@ public class Solution {
 		if (n1 != n2) {
 			return false;
 		}
-		scramble = new int[n1][n2];
 		return isScramble(s1.toCharArray(), 0, n1, s2.toCharArray(), 0, n2);
 	}
 
