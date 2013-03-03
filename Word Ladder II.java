@@ -3,8 +3,10 @@ public class Solution {
 			HashSet<String> dict) {
 		// Start typing your Java solution below
 		// DO NOT write main() function
-		ArrayList<Node> dicts = new ArrayList<Node>();
+		
 		int n = 0;
+		// make node list.
+		ArrayList<Node> dicts = new ArrayList<Node>();
 		Node startNode = new Node(n++, start);
 		dicts.add(startNode);
 		for (String s : dict) {
@@ -13,6 +15,23 @@ public class Solution {
 		Node endNode = new Node(n++, end);
 		dicts.add(endNode);
 
+		List<ArrayList<Node>> passMap = makeMap(dicts);
+		
+		bfsWordLadder(passMap, dicts);
+
+		int maxStep = endNode.step;
+		for (Node node : dicts) {
+			node.visited = false;
+		}
+
+		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<ArrayList<String>> res = new ArrayList<ArrayList<String>>();
+		dfsWordLadder(startNode, endNode, maxStep, passMap, list, res);
+		return res;
+	}
+
+	private List<ArrayList<Node>> makeMap(ArrayList<Node> dicts) {
+		int n = dicts.size();
 		List<ArrayList<Node>> passMap = new ArrayList<ArrayList<Node>>();
 		for (int i = 0; i < n; i++) {
 			passMap.add(new ArrayList<Node>());
@@ -20,7 +39,7 @@ public class Solution {
 
 		ArrayList<Node> sortArray = new ArrayList<Node>();
 		sortArray.addAll(dicts);
-		int wordLen = start.length();
+		int wordLen = dicts.get(0).val.length();
 		NodeComparator comparator = new NodeComparator();
 		for (int maskIndex = 0; maskIndex < wordLen; maskIndex++) {
 			comparator.mask = maskIndex;
@@ -42,7 +61,13 @@ public class Solution {
 				}
 			}
 		}
+		return passMap;
+	}
 
+	private void bfsWordLadder(List<ArrayList<Node>> passMap,
+			ArrayList<Node> dicts) {
+		int n = dicts.size();
+		Node startNode = dicts.get(0);
 		Queue<Node> queue = new LinkedList<Node>();
 		startNode.visited = true;
 		startNode.step = 1;
@@ -62,18 +87,9 @@ public class Solution {
 				}
 			}
 		}
-		int maxStep = endNode.step;
-		for (Node node : dicts) {
-			node.visited = false;
-		}
-		
-		ArrayList<String> list = new ArrayList<String>();
-		ArrayList<ArrayList<String>> res = new ArrayList<ArrayList<String>>();
-		searchLadder(startNode, endNode, maxStep, passMap, list, res);
-		return res;
 	}
 
-	private void searchLadder(Node node, Node endNode, int maxStep,
+	private void dfsWordLadder(Node node, Node endNode, int maxStep,
 			List<ArrayList<Node>> passMap, ArrayList<String> list,
 			ArrayList<ArrayList<String>> res) {
 		if (list.size() == maxStep) {
@@ -89,10 +105,10 @@ public class Solution {
 			node.visited = false;
 			return;
 		}
-		
+
 		for (Node nextNode : passMap.get(node.index)) {
 			if (!nextNode.visited && list.size() == nextNode.step - 1) {
-				searchLadder(nextNode, endNode, maxStep, passMap, list, res);
+				dfsWordLadder(nextNode, endNode, maxStep, passMap, list, res);
 			}
 		}
 		list.remove(list.size() - 1);
