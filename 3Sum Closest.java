@@ -50,5 +50,20 @@ public class Solution {
 		}
 		return target >= n[start] ? start : start - 1;
 	}
+	
+	private int bsearch2(int[] n, int start, int end, int target){
+		int mid;
+		while(start < end){
+			mid = (start + end) / 2;
+			if (n[mid] < target){
+				start = mid + 1;
+			} else if(n[mid] > target){
+				end = mid;
+			} else{
+				return mid;
+			}
+		}
+		return start - 1;
+    }
 
 }
