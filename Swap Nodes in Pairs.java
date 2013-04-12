@@ -14,23 +14,23 @@ public class Solution {
         // Start typing your Java solution below
         // DO NOT write main() function
         if(head == null){
-    		return head;
-    	}
+            return head;
+        }
         ListNode p1, p2, p3;
         p1 = null;
         p2 = head;
         p3 = head.next;
         while(p3 != null){
-        	p2.next = p3.next;
-        	p3.next = p2;
-        	if(p1 != null){
-        		p1.next = p3;
-        	}else{
-        		head = p3;
-        	}
-        	p1 = p2;
-        	p2 = p2.next;
-        	p3 = p2 != null ? p2.next : null;
+            p2.next = p3.next;
+            p3.next = p2;
+            if(p1 != null){
+                p1.next = p3;
+            }else{
+                head = p3;
+            }
+            p1 = p2;
+            p2 = p2.next;
+            p3 = p2 != null ? p2.next : null;
         }
         return head;
     }
