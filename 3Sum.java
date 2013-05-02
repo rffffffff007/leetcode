@@ -20,18 +20,6 @@ public class Solution {
         }
         ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
         res.addAll(set);
-        Collections.sort(res, new Comparator<ArrayList<Integer>>(){
-            public int compare(ArrayList<Integer> a, ArrayList<Integer> b){
-                for(int i = 0; i < a.size(); i++){
-                    if(a.get(i) == b.get(i)){
-                        continue;
-                    }else{
-                        return a.get(i) - b.get(i);
-                    }
-                }
-                return 0;
-            } 
-        });
         return res;
     }
 
@@ -47,5 +35,40 @@ public class Solution {
         }else{
             return mid;
         }
+    }
+}
+
+
+public class Solution {
+    public ArrayList<ArrayList<Integer>> threeSum(int[] num) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        Arrays.sort(num);
+        int n = num.length;
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        Set<ArrayList<Integer>> resSet = new HashSet<ArrayList<Integer>>();
+        for(int i = 0; i < n; i++){
+            int target = -num[i];
+            int s = i + 1;
+            int e = n - 1;
+            while(s < e){
+                if (num[s] + num[e] == target){
+                    ArrayList<Integer> items = new ArrayList<Integer>(); 
+                    items.add(num[i]);
+                    items.add(num[s]);
+                    items.add(num[e]);
+                    Collections.sort(items);
+                    resSet.add(items);
+                    e--;
+                    s++;
+                } else if(num[s] + num[e] > target){
+                    e--;
+                } else{
+                    s++; 
+                }
+            }
+        }
+        res.addAll(resSet);
+        return res;
     }
 }
