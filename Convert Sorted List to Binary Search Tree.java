@@ -17,29 +17,29 @@
  */
 public class Solution {
     public TreeNode sortedListToBST(ListNode head) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
-		if (head == null)
-			return null;
-		ListNode preP = null;
-		ListNode p = head;
-		ListNode p2 = head;
-		while (p2 != null && p2.next != null) {
-			preP = p;
-			p = p.next;
-			p2 = p2.next.next;
-		}
-		ListNode left = head;
-		if (preP != null) {
-			preP.next = null;
-		}
-		ListNode right = p.next;
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if (head == null)
+            return null;
+        ListNode preP = null;
+        ListNode p = head;
+        ListNode p2 = head;
+        while (p2 != null && p2.next != null) {
+            preP = p;
+            p = p.next;
+            p2 = p2.next.next;
+        }
+        ListNode left = head;
+        if (preP != null) {
+            preP.next = null;
+        }
+        ListNode right = p.next;
 
-		TreeNode node = new TreeNode(p.val);
-		if (preP != null) {
-			node.left = sortedListToBST(left);
-		}
-		node.right = sortedListToBST(right);
-		return node;
-	}
+        TreeNode node = new TreeNode(p.val);
+        if (preP != null) {
+            node.left = sortedListToBST(left);
+        }
+        node.right = sortedListToBST(right);
+        return node;
+    }
 }

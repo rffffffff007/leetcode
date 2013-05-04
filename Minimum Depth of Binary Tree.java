@@ -13,17 +13,18 @@ public class Solution {
         // DO NOT write main() function
         if(root == null){
             return 0;
+        }else{
+            return depth(root);
         }
-        if(root.left == null && root.right == null){
+    }
+    
+    private int depth(TreeNode root){
+        if (root == null) {
+            return Integer.MAX_VALUE;
+        } else if (root.left == null && root.right == null) {
             return 1;
+        } else {
+            return Math.min(depth(root.left), depth(root.right)) + 1;
         }
-        int min = Integer.MAX_VALUE;
-        if(root.left != null){
-            min = Math.min(min, minDepth(root.left));
-        }
-        if(root.right != null){
-            min = Math.min(min, minDepth(root.right));
-        }
-        return min + 1;
     }
 }

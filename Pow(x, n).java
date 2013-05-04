@@ -2,17 +2,17 @@ public class Solution {
     public double pow(double x, int n) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        if(n < 0){
-            return 1 / pow(x, -n);
-        }
+        return pow(x, (long)n);
+    }
+    
+    private double pow(double x, long n){
         if(n == 0){
             return 1;
-        }
-        double p = pow(x, n / 2);
-        if(n % 2 == 0){
-            return p * p;
+        }else if(n < 0){
+            return 1 / pow(x, -n);
         }else{
-            return p * p * x;
+            double p = pow(x, n / 2);
+            return p * p * (n % 2 == 0 ? 1 : x);
         }
     }
 }
