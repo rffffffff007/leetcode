@@ -14,7 +14,7 @@ public class Solution {
 			for (int j = 0; j < target + 1; j++) {
 				nodes[i][j] = new Node(i, j);
 				// 0-1 package problem.
-				// nodes[i][j] = nodes[i - 1][j] + nodes[i][j - candidates[i]];
+				// nodes[i][j] = nodes[i - 1][j] + nodes[i - 1][j - candidates[i]];
 				if (notEmpty(i - 1, j, nodes)) {
 					nodes[i][j].addPair(i - 1, j, false);
 				}
