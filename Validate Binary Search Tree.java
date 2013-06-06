@@ -11,20 +11,16 @@ public class Solution {
     public boolean isValidBST(TreeNode root) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        return isValidBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        return isValidBst(root, Integer.MIN_VALUE, Integer.MAX_VALUE);        
     }
     
-    private boolean isValidBST(TreeNode root, int lower, int upper){
+    private boolean isValidBst(TreeNode root, int min, int max){
         if(root == null){
             return true;
-        } else if(root.val >= upper || root.val <= lower){
+        } else if(root.val <= min || root.val >= max){
             return false;
+        } else{
+            return isValidBst(root.left, min, root.val) && isValidBst(root.right, root.val, max);
         }
-        
-        if(!isValidBST(root.left, lower, root.val) || !isValidBST(root.right, root.val, upper)){
-            return false;
-        }
-        
-        return true;
     }
 }

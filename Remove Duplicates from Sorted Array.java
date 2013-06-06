@@ -22,3 +22,19 @@ public class Solution {
         }
     }
 }
+
+public class Solution {
+    public int removeDuplicates(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int lastI = 0;
+        int realI = 0;
+        for(int i = 0; i <= A.length; i++){
+            if(i > lastI && (i == A.length || A[i] != A[lastI])){
+                A[realI++] = A[lastI];
+                lastI = i;
+            }
+        }
+        return realI;
+    }
+}

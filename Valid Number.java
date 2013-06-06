@@ -1,3 +1,14 @@
+/**
+ 
+<NUMBER> ::= <DECIMAL> ['e' <INTEGER>]
+<DECIMAL> ::= <SIGN> <DECIMAL_POSITIVE>
+<DECIMAL_POSITIVE> ::= INTEGER_POSITIVE ['.' (<INTEGER_POSITIVE> | ¦Å)]
+                       | (<INTEGER_POSITIVE> | ¦Å) '.' <INTEGER_POSITIVE> 
+<INTEGER> ::= <SIGN> <INTEGER_POSITIVE>
+<INTEGER_POSITIVE> ::= [0-9]+
+<SIGN> ::= '+' | '-' | ¦Å
+
+*/
 public class Solution {
     public boolean isNumber(String s) {
         // Start typing your Java solution below
