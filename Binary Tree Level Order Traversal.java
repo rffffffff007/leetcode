@@ -76,3 +76,43 @@ public class Solution {
         dfs(root.right, depth + 1, res);
     }
 }
+
+
+
+/**
+ * @time: 2013-08-25
+ * }
+ */
+public class Solution {
+    public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if(root == null)
+            return result;
+        ArrayList<Integer> row = new ArrayList<Integer>();
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+        int nodesLeft = 1;
+        while(!queue.isEmpty()){
+            if(nodesLeft == 0){
+                result.add(row);
+                row = new ArrayList<Integer>();
+                nodesLeft = queue.size();
+            }
+            TreeNode node = queue.poll();
+            row.add(node.val);
+            nodesLeft--;
+            if(node.left != null){
+                queue.offer(node.left);
+            }
+            if(node.right != null){
+                queue.offer(node.right);
+            }
+        }
+        if(row != null){
+            result.add(row);
+        }
+        return result;
+    }
+}
