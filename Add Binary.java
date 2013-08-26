@@ -50,3 +50,59 @@ public class Solution {
         }
     }
 }
+
+/**
+ * @time: 2013-08-26
+ */
+public class Solution {
+    public String addBinary(String a, String b) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        char[] as = a.toCharArray();
+        char[] bs = b.toCharArray();
+        reverse(as);
+        reverse(bs);
+        char[] cs = add(as, bs);
+        reverse(cs);
+        
+        int i = 0;
+        while(i < cs.length - 1 && cs[i] == '0')
+            i++;
+            
+        return new String(cs, i, cs.length - i);
+        
+    }
+    
+    private char[] add(char[] as, char[] bs){
+        int lena = as.length;
+        int lenb = bs.length;
+        int lenc = Math.max(lena, lenb) + 1;
+        char[] cs = new char[lenc];
+        Arrays.fill(cs, '0');
+        
+        for(int i = 0; i < lenc - 1; i++){
+            int val = cs[i] - '0';
+            if(i < lena)
+                val += as[i] - '0'; 
+            if(i < lenb)
+                val += bs[i] - '0';
+            cs[i] = (char)(val % 2 + '0');
+            cs[i + 1] += (char)(val / 2);
+        }
+        return cs;
+    }
+    
+    private void reverse(char[] c){
+        int i = 0;
+        int j = c.length - 1;
+        while(i < j){
+            swap(c, i++, j--);
+        }
+    }
+    
+    private void swap(char[] c, int i, int j){
+        char tmp = c[i];
+        c[i] = c[j];
+        c[j] = tmp;
+    }
+}

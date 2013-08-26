@@ -32,3 +32,42 @@ public class Solution {
         list.add(root.val);
     }
 }
+
+/**
+ * @time: 2013-08-26
+ */
+public class Solution {
+    public ArrayList<ArrayList<Integer>> levelOrderBottom(TreeNode root) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+                // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if(root == null)
+            return result;
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.add(root);
+        int nodesInRow = 1;
+        ArrayList<Integer> row = new ArrayList<Integer>();
+        while(!queue.isEmpty()){
+            if(nodesInRow == 0){
+                nodesInRow = queue.size();
+                result.add(row);
+                row = new ArrayList<Integer>();
+            }
+            TreeNode node = queue.poll();
+            row.add(node.val);
+            nodesInRow--;
+            
+            if(node.left != null){
+                queue.add(node.left);
+            }
+            if(node.right != null){
+                queue.add(node.right);
+            }
+        }
+        result.add(row);
+        Collections.reverse(result);
+        return result;
+    }
+}

@@ -34,3 +34,45 @@ public class Solution {
         return l1;
     }
 }
+
+
+/**
+ * @time: 2013-08-26
+ */
+public class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ListNode root = null;
+        ListNode cur = null, next = null;
+        while(l1 != null || l2 != null){
+            int val = 0;
+            if(l1 != null){
+                val += l1.val;
+                l1 = l1.next;
+            }
+            if(l2 != null){
+                val += l2.val;
+                l2 = l2.next;
+            }
+            if(cur == null){
+                cur = new ListNode(0);
+            }
+            if(root == null){
+                root = cur;
+            }
+            cur.val += val;
+            cur.next = new ListNode(0);
+            cur.next.val += cur.val / 10;
+            cur.val %= 10;
+            if(l1 == null && l2 == null){
+                // reach the last node, delete the last 0 node.
+                if(cur.next.val == 0){
+                    cur.next = null;
+                }
+            }
+            cur = cur.next;
+        }
+        return root;
+    }
+}
