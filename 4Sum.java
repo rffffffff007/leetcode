@@ -96,3 +96,86 @@ public class Solution {
         }
     }
 }
+
+
+/**
+ * @time: 2013-08-26
+ * use a hashMap to change 4sum to 2sum.
+ */
+public class Solution {
+    public ArrayList<ArrayList<Integer>> fourSum(int[] num, int target) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int n = num.length;
+        Map<Integer, ArrayList<Pair>> numMap = new HashMap<Integer, ArrayList<Pair>>();
+        
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n; j++){
+                Pair p = new Pair(i, j);
+                int sum = num[i] + num[j];
+                ArrayList<Pair> pairs = numMap.get(sum);
+                if(pairs == null){
+                    pairs = new ArrayList<Pair>();
+                    numMap.put(sum, pairs);
+                }
+                pairs.add(p);
+                
+            }
+        }
+        
+        Set<ArrayList<Integer>> resultSet = new HashSet<ArrayList<Integer>>();
+        for(int keya : numMap.keySet()){
+            int keyb = target - keya;
+            ArrayList<Pair> listA = numMap.get(keya);
+            ArrayList<Pair> listB = numMap.get(keyb);
+            if(keya == keyb){
+                int lena = listA.size();
+                for(int i = 0; i < lena; i++){
+                    for(int j = i + 1; j < lena; j++){
+                        Pair pa = listA.get(i);
+                        Pair pb = listA.get(j);
+                        if(!pa.overlap(pb))
+                            resultSet.add(toList(num, pa, pb));
+                    }
+                }
+            } else if(listB != null){
+                for(Pair pa : listA){
+                    for(Pair pb : listB){
+                        if(!pa.overlap(pb))
+                            resultSet.add(toList(num, pa, pb));
+                    }
+                }
+            }
+
+        }
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        result.addAll(resultSet);
+        return result;
+    }
+    
+    private ArrayList<Integer> toList(int[] num, Pair pa, Pair pb){
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        list.add(num[pa.a]);
+        list.add(num[pa.b]);
+        list.add(num[pb.a]);
+        list.add(num[pb.b]);
+        Collections.sort(list);
+        return list;
+    }
+    
+    private class Pair{
+        int a;
+        int b;
+        
+        public Pair(int a, int b){
+            this.a = a;
+            this.b = b;
+        }
+        
+        public boolean overlap(Pair p){
+            if(p == null)
+                return false;
+            return a == p.a || a == p.b || b == p.a || b == p.b;
+        }
+    }
+}
