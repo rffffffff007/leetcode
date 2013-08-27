@@ -1,4 +1,5 @@
 /**
+ * @time: 2013-08-27
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
@@ -19,77 +20,32 @@ public class Solution {
     public TreeNode sortedListToBST(ListNode head) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        if (head == null)
-            return null;
-        ListNode preP = null;
-        ListNode p = head;
-        ListNode p2 = head;
-        while (p2 != null && p2.next != null) {
-            preP = p;
-            p = p.next;
-            p2 = p2.next.next;
-        }
-        ListNode left = head;
-        if (preP != null) {
-            preP.next = null;
-        }
-        ListNode right = p.next;
-
-        TreeNode node = new TreeNode(p.val);
-        if (preP != null) {
-            node.left = sortedListToBST(left);
-        }
-        node.right = sortedListToBST(right);
-        return node;
-    }
-}
-
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; next = null; }
- * }
- */
-/**
- * Definition for binary tree
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-public class Solution {
-    public TreeNode sortedListToBST(ListNode head) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        int n = 0;
-        ListNode p = head;
-        while(p != null){
-            n++;
-            p = p.next;
-        }
-        TreeNode node = new TreeNode(0);
-        buildBst(head, n, node, true);
-        return node.left;
+        ListNode root = new ListNode(0);
+        root.next = head;
+        int len = getListLen(head);
+        return listToBST(root, len);
     }
     
-    private ListNode buildBst(ListNode head, int n, TreeNode root, boolean left){
-        if(head == null || n == 0){
-            return head;
+    private int getListLen(ListNode head){
+        int count = 0;
+        while(head != null){
+            count++;
+            head = head.next;
         }
-        TreeNode next = new TreeNode(0);
-        if(left){
-            root.left = next;
-        }else{
-            root.right = next;
-        }
-        head = buildBst(head, n / 2, next, true);
-        next.val = head.val;
-        head = head.next;
-        head = buildBst(head, (n - 1) / 2, next, false);
-        return head;
+        return count;
+    }
+    
+    private TreeNode listToBST(ListNode root, int len){
+        if(len == 0 || root.next == null)
+            return null;
+        int leftLen = (len - 1) / 2;
+        int rightLen = len - 1 - leftLen;
+        
+        TreeNode left = listToBST(root, leftLen);
+        TreeNode node = new TreeNode(root.next.val);
+        root.next = root.next.next;
+        node.left = left;
+        node.right = listToBST(root, rightLen);
+        return node;
     }
 }
