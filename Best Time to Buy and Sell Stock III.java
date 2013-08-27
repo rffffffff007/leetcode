@@ -1,3 +1,56 @@
+
+/**
+ * @time: 2013-08-13
+ */
+public class Solution {
+    public int maxProfit(int[] prices) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        List<Integer> ps = new ArrayList<Integer>();
+        int last = Integer.MIN_VALUE;
+        // remove duplicate prices.
+        for(int p : prices){
+            if(p != last){
+                ps.add(p);
+            }
+            last = p;
+        }
+        int n = ps.size();
+        prices = new int[n];
+        for(int i = 0; i < n; i++){
+            prices[i] = ps.get(i);
+        }
+        
+        int[] minLeft = new int[n];
+        int[] maxRight = new int[n];
+        Arrays.fill(minLeft, Integer.MAX_VALUE);
+        for(int i = 0; i < n; i++){
+            if(i > 0)
+                minLeft[i] = minLeft[i - 1];
+            minLeft[i] = Math.min(minLeft[i], prices[i]);
+        }
+        Arrays.fill(maxRight, Integer.MIN_VALUE);
+        for(int i = n - 1; i >= 0; i--){
+            if(i < n - 1)
+                maxRight[i] = maxRight[i + 1];
+            maxRight[i] = Math.max(maxRight[i], prices[i]);
+        }
+        
+        // First round, sell on ith day.
+        // Second round, buy on jth day. 
+        int profit = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = i; j < n; j++){
+                int firstProfit = prices[i] - minLeft[i];
+                int secondProfit = maxRight[j] - prices[j];
+                profit = Math.max(profit, firstProfit + secondProfit);
+            }
+        }
+        return profit;
+    }
+}
+
+
 public class Solution {
     public int maxProfit(int[] prices) {
         // Start typing your Java solution below
@@ -41,42 +94,4 @@ public class Solution {
         }
         return max;
     }
-}
-
-/**
- * @time: 2013-08-13
- */
-public class Solution {
-    public int maxProfit(int[] prices) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        int n = prices.length;
-        int[] minLeft = new int[n];
-        int[] maxRight = new int[n];
-        Arrays.fill(minLeft, Integer.MAX_VALUE);
-        for(int i = 0; i < n; i++){
-            if(i > 0)
-                minLeft[i] = minLeft[i - 1];
-            minLeft[i] = Math.min(minLeft[i], prices[i]);
-        }
-        Arrays.fill(maxRight, Integer.MIN_VALUE);
-        for(int i = n - 1; i >= 0; i--){
-            if(i < n - 1)
-                maxRight[i] = maxRight[i + 1];
-            maxRight[i] = Math.max(maxRight[i], prices[i]);
-        }
-        
-        // First round, sell on ith day.
-        // Second round, buy on jth day. 
-        int profit = 0;
-        for(int i = 0; i < n; i++){
-            for(int j = i; j < n; j++){
-                int firstProfit = prices[i] - minLeft[i];
-                int secondProfit = maxRight[j] - prices[j];
-                profit = Math.max(profit, firstProfit + secondProfit);
-            }
-        }
-        return profit;
-    }
-
 }
