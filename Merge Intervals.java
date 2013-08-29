@@ -1,4 +1,5 @@
 /**
+ * @time: 2013-08-29
  * Definition for an interval.
  * public class Interval {
  *     int start;
@@ -13,29 +14,20 @@ public class Solution {
         // DO NOT write main() function
         Collections.sort(intervals, new Comparator<Interval>(){
             public int compare(Interval a, Interval b){
-                if(a.start != b.start){
-                    return a.start - b.start;
-                }else{
-                    return a.end - b.end;
-                }
-            } 
+                return a.start - b.start;
+            }
         });
         
-        ArrayList<Interval> res = new ArrayList<Interval>();
-        Interval last = null;
+        ArrayList<Interval> result = new ArrayList<Interval>();
+        Interval cur = null;
         for(Interval i : intervals){
-            if(last == null){
-                last = i;
-            } else if(i.start > last.end){
-                res.add(last);
-                last = i;
-            } else{
-                last.end = Math.max(i.end, last.end);
-            }
+            if(cur == null || cur.end < i.start){
+                cur = new Interval(i.start, i.end);
+                result.add(cur);
+            } else {
+                cur.end = Math.max(cur.end, i.end);
+            } 
         }
-        if(last != null){
-            res.add(last);
-        }
-        return res;
+        return result;
     }
 }

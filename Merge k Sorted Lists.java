@@ -1,4 +1,7 @@
 /**
+ * @time: 2013-08-30
+ * Use a PriorityQueue(a min heap) to solve this. O(n * k * log(k))
+ * 
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
@@ -13,32 +16,30 @@ public class Solution {
     public ListNode mergeKLists(ArrayList<ListNode> lists) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        ListNode root = null;
-        ListNode res = null;
-        ListNode min = null;
-        int mini = 0;
-        boolean allNull = false;
-        while(!allNull){
-            allNull = true;
-            min = null;
-            for(int i = 0; i < lists.size(); i++){
-                ListNode node = lists.get(i);
-                if(node != null){
-                    allNull = false;
-                    if(min == null || node.val < min.val){
-                        min = node;
-                        mini = i;
+        int n = Math.max(lists.size(), 1);
+        PriorityQueue<ListNode> pq = new PriorityQueue<ListNode>(n,
+                new Comparator<ListNode>() {
+                    public int compare(ListNode a, ListNode b) {
+                        return a.val - b.val;
                     }
-                }
-            }
-            if(min != null){
-                lists.set(mini, min.next);
-            }
-            if(res == null){
-                root = res = min;
-            }else{
-                res.next = min;
-                res = res.next;
+                });
+
+
+        for (ListNode node : lists)
+            if (node != null)
+                pq.offer(node);
+
+        ListNode root = null;
+        ListNode rootPointer = null;
+        while (!pq.isEmpty()) {
+            ListNode minNode = pq.poll();
+            if (minNode.next != null)
+                pq.offer(minNode.next);
+            if (root == null) {
+                root = rootPointer = minNode;
+            } else {
+                rootPointer.next = minNode;
+                rootPointer = minNode;
             }
         }
         return root;
