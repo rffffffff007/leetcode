@@ -1,4 +1,5 @@
 /**
+ * @time: 2013-08-30
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
@@ -13,30 +14,22 @@ public class Solution {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        ListNode root = null, p = null;
-        ListNode min;
-        while(l1 != null || l2 != null){
-            if(l1 == null){
-                min = l2;
-                l2 = l2.next;
-            }else if(l2 == null){
-                min = l1;
-                l1 = l1.next;
-            }else if(l1.val < l2.val){
-                min = l1;
-                l1 = l1.next;
-            }else {
-                min = l2;
-                l2 = l2.next;
-            }
-            if(root == null){
-                root = p = min;
-            }else{
-                p.next = min;
-                p = p.next;
-            }
+        if(l1 == null && l2 == null)
+            return null;
+        if(l1 == null)
+            return l2;
+        if(l2 == null)
+            return l1;
+            
+        ListNode node = null;
+        if(l1.val < l2.val){
+            node = l1;
+            node.next = mergeTwoLists(l1.next, l2);
+        } else {
+            node = l2;
+            node.next = mergeTwoLists(l1, l2.next);
         }
-        return root;
+        return node;
     }
 }
 
