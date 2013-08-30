@@ -1,73 +1,77 @@
+/**
+ * @time: 2013-08-30
+ * O(n)
+ */
 public class Solution {
     public String minWindow(String S, String T) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        if (T.length() == 0) {
-            return "";
-        }
-        char[] ss = S.toCharArray();
-        char[] ts = T.toCharArray();
-        int[] sf = new int[26 * 2];
-        int[] tf = new int[26 * 2];
+        int lens = S.length();
+        int lent = T.length();
 
-        for (char c : ts) {
-            if (isValid(c)) {
-                tf[toIndex(c)] += 1;
-            }
+        Map<Character, Integer> freqT = new HashMap<Character, Integer>();
+        Map<Character, Integer> freqS = new HashMap<Character, Integer>();
+        Set<Character> unmatchSet = new HashSet<Character>();
+
+        for (int i = 0; i < lent; i++) {
+            char ct = T.charAt(i);
+            increase(freqT, ct);
+            unmatchSet.add(ct);
         }
 
-        int minLen = Integer.MAX_VALUE;
-        int minStart = -1;
+        int minWinStart = -1;
+        int minWinLen = Integer.MAX_VALUE;
         int start = 0;
-        int index;
-
-        for (int i = 0; i < ss.length; i++) {
-            if (isValid(ss[i])) {
-                sf[toIndex(ss[i])] += 1;
+        for (int i = 0; i < lens; i++) {
+            char cs = S.charAt(i);
+            increase(freqS, cs);
+            if (unmatchSet.contains(cs) && valDiff(freqS, freqT, cs) >= 0) {
+                unmatchSet.remove(cs);
             }
-            for (; start < i; start++) {
-                if (!isValid(ss[start])) {
-                    continue;
+            while (start <= i && unmatchSet.size() == 0) {
+                int len = i - start + 1;
+                if (len < minWinLen) {
+                    minWinLen = len;
+                    minWinStart = start;
                 }
-                index = toIndex(ss[start]);
-                if (sf[index] <= tf[index] && sf[index] + tf[index] != 0) {
-                    break;
+                char cstart = S.charAt(start);
+                decrease(freqS, cstart);
+                if (valDiff(freqS, freqT, cstart) < 0) {
+                    unmatchSet.add(cstart);
                 }
-                if (sf[index] > tf[index])
-                    sf[index]--;
-            }
-
-            if (containsAll(sf, tf) && i - start + 1 < minLen) {
-                minLen = i - start + 1;
-                minStart = start;
+                start++;
             }
         }
-        if (minStart < 0) {
+        if (minWinStart == -1)
             return "";
-        } else {
-            return S.substring(minStart, minStart + minLen);
-        }
+        return S.substring(minWinStart, minWinStart + minWinLen);
     }
 
-    private int toIndex(char c) {
-        if (c >= 'a' && c <= 'z')
-            return c - 'a';
-        else if (c >= 'A' && c <= 'Z')
-            return c - 'A' + 26;
+    private int valDiff(Map<Character, Integer> map1,
+            Map<Character, Integer> map2, char c) {
+        int v1 = 0;
+        if (map1.containsKey(c))
+            v1 = map1.get(c);
+        int v2 = 0;
+        if (map2.containsKey(c))
+            v2 = map2.get(c);
+        return v1 - v2;
+    }
+
+    private void increase(Map<Character, Integer> map, char c) {
+        if (map.containsKey(c))
+            map.put(c, map.get(c) + 1);
         else
-            return -1;
+            map.put(c, 1);
     }
 
-    private boolean isValid(char c) {
-        return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z';
-    }
-
-    private boolean containsAll(int[] sf, int[] tf) {
-        for (int i = 0; i < 52; i++) {
-            if (sf[i] < tf[i]) {
-                return false;
-            }
+    private void decrease(Map<Character, Integer> map, char c) {
+        if (map.containsKey(c)) {
+            int val = map.get(c);
+            if (val <= 1)
+                map.remove(c);
+            else
+                map.put(c, val - 1);
         }
-        return true;
     }
 }

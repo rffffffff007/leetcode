@@ -1,57 +1,44 @@
+/**
+ * @time: 2013-08-30
+ */
 public class Solution {
     public ArrayList<String[]> solveNQueens(int n) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        int[] queens = new int[n];
-        Arrays.fill(queens, -1);
         ArrayList<String[]> res = new ArrayList<String[]>();
-        searchQueens(0, queens, res);
+        solveNQ(n, 0, new int[n], res);
         return res;
     }
-
-    private void searchQueens(int i, int[] queens, ArrayList<String[]> res) {
-        int n = queens.length;
-        if (i == n) {
+    
+    private void solveNQ(int n, int row, int[] queens, ArrayList<String[]> res){
+        if(row == n){
             String[] strs = new String[n];
-            res.add(strs);
-            for (int j = 0; j < n; j++) {
-                StringBuilder dotsStr = new StringBuilder();
-                for (int k = 0; k < n; k++) {
-                    if (queens[j] == k)
-                        dotsStr.append('Q');
-                    else
-                        dotsStr.append('.');
-                }
-                strs[j] = dotsStr.toString();
+            char[] arr = new char[n];
+            Arrays.fill(arr, '.');
+            for(int i = 0; i < n; i++){
+                arr[queens[i]] = 'Q';
+                strs[i] = new String(arr);
+                arr[queens[i]] = '.';
             }
+            res.add(strs);
             return;
         }
-
-        for (int j = 0; j < n; j++) {
-            if (couldPlace(i, j, queens)) {
-                queens[i] = j;
-                searchQueens(i + 1, queens, res);
-                queens[i] = -1;
+        for(int col = 0; col < n; col++){
+            if(fit(n, queens, row, col)){
+                queens[row] = col;
+                solveNQ(n, row + 1, queens, res);
             }
         }
     }
-
-    private boolean couldPlace(int i, int j, int[] queens) {
-        int n = queens.length;
-        for (int k = 0; k < i; k++) {
-            if (queens[k] == j) {
+    
+    private boolean fit(int n, int[] queens, int row, int col){
+        int leftTop = col;
+        int rightTop = col;
+        for(int i = row - 1; i >= 0; i--){
+            leftTop--;
+            rightTop++;
+            if(queens[i] == col || queens[i] == leftTop || queens[i] == rightTop)
                 return false;
-            }
-        }
-        for (int k = 0; k <= j && k <= i; k++) {
-            if (queens[i - k] == j - k) {
-                return false;
-            }
-        }
-        for (int k = 0; k < n - j && k <= i; k++) {
-            if (queens[i - k] == j + k) {
-                return false;
-            }
         }
         return true;
     }

@@ -69,3 +69,28 @@ public class Solution {
         return max;
     }
 }
+
+public class Solution {
+    public int longestValidParentheses(String s) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int n = s.length();
+        int[] dp = new int[n];
+        int max = 0;
+        for (int i = n - 2; i >= 0; i--) {
+            if (s.charAt(i) == '(') {
+                int j = i + 1 + dp[i + 1];
+                if (j < n && s.charAt(j) == ')') {
+                    dp[i] = dp[i + 1] + 2;
+                    int k = 0;
+                    if (j + 1 < n) {
+                        k = dp[j + 1];
+                    }
+                    dp[i] += k;
+                }
+                max = Math.max(max, dp[i]);
+            }
+        }
+        return max;
+    }
+}

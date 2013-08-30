@@ -1,48 +1,36 @@
+/**
+ * @time: 2013-08-30
+ */
 public class Solution {
-    private int total = 0;
-
     public int totalNQueens(int n) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        total = 0;
-        int[] queens = new int[n];
-        Arrays.fill(queens, -1);
-        searchQueens(0, queens);
-        return total;
+        return solveNQ(n, 0, new int[n]);
     }
 
-    private void searchQueens(int i, int[] queens) {
-        int n = queens.length;
-        if (i == n) {
-            total++;
-            return;
+    private int solveNQ(int n, int row, int[] queens) {
+        if (row == n) {
+            return 1;
         }
-
-        for (int j = 0; j < n; j++) {
-            if (couldPlace(i, j, queens)) {
-                queens[i] = j;
-                searchQueens(i + 1, queens);
-                queens[i] = -1;
+        int sum = 0;
+        for (int col = 0; col < n; col++) {
+            if (fit(n, queens, row, col)) {
+                queens[row] = col;
+                sum += solveNQ(n, row + 1, queens);
             }
         }
+        return sum;
     }
 
-    private boolean couldPlace(int i, int j, int[] queens) {
-        int n = queens.length;
-        for (int k = 0; k < i; k++) {
-            if (queens[k] == j) {
+    private boolean fit(int n, int[] queens, int row, int col) {
+        int leftTop = col;
+        int rightTop = col;
+        for (int i = row - 1; i >= 0; i--) {
+            leftTop--;
+            rightTop++;
+            if (queens[i] == col || queens[i] == leftTop
+                    || queens[i] == rightTop)
                 return false;
-            }
-        }
-        for (int k = 0; k <= j && k <= i; k++) {
-            if (queens[i - k] == j - k) {
-                return false;
-            }
-        }
-        for (int k = 0; k < n - j && k <= i; k++) {
-            if (queens[i - k] == j + k) {
-                return false;
-            }
         }
         return true;
     }

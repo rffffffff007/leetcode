@@ -1,3 +1,7 @@
+/**
+ * Could also use Trie for longest common prefix in n string. Time is also O(n * m).
+ * Trie could also used for finding the longest common prefix between any 2 pairs in n strings, cost O(n * m)
+ */
 public class Solution {
     public String longestCommonPrefix(String[] strs) {
         // Start typing your Java solution below
