@@ -1,4 +1,5 @@
 /**
+ * @time: 2013-08-31
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
@@ -13,35 +14,23 @@ public class Solution {
     public ListNode partition(ListNode head, int x) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        ListNode llist = null, lp = null;
-        ListNode rlist = null, rp = null;
-
+        ListNode left = new ListNode(0);
+        ListNode right = new ListNode(0);
+        ListNode lp = left;
+        ListNode rp = right;
         while (head != null) {
             if (head.val < x) {
-                if (llist == null) {
-                    lp = llist = head;
-                } else {
-                    lp.next = head;
-                    lp = lp.next;
-                }
-                head = head.next;
-                lp.next = null;
+                lp.next = head;
+                lp = lp.next;
             } else {
-                if (rlist == null) {
-                    rp = rlist = head;
-                } else {
-                    rp.next = head;
-                    rp = rp.next;
-                }
-                head = head.next;
-                rp.next = null;
+                rp.next = head;
+                rp = rp.next;
             }
+            head = head.next;
+            lp.next = rp.next = null;
         }
-        if (lp != null) {
-            lp.next = rlist;
-            return llist;
-        } else {
-            return rlist;
-        }
+        
+        lp.next = right.next;
+        return left.next;
     }
 }

@@ -28,7 +28,7 @@ public class Solution {
     private void searchResult(String s, int curIndex,
             ArrayList<ArrayList<Integer>> prevsList,
             ArrayList<ArrayList<String>> res, ArrayList<String> list) {
-        if (curIndex <= 0) {
+        if (curIndex < 0) {
             ArrayList<String> curList = new ArrayList<String>();
             curList.addAll(list);
             Collections.reverse(curList);
