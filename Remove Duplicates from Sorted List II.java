@@ -35,3 +35,29 @@ public class Solution {
         return head;
     }
 }
+
+/**
+ * @time: 2013-08-31
+ */
+public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ListNode empty = new ListNode(Integer.MIN_VALUE);
+        empty.next = head;
+        ListNode p = empty;
+        ListNode q = empty;
+        while(p != null && p.next != null){
+            q = p.next;
+            while(q.next != null && q.val == q.next.val){
+                q = q.next;
+            }
+            if(q != p.next){
+                p.next = q.next;
+            } else
+                p = p.next;
+        }
+        
+        return empty.next;
+    }
+}

@@ -2,31 +2,6 @@ public class Solution {
     public int removeDuplicates(int[] A) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        int n = A.length;
-        int lasti = 0;
-        for (int i = 1; i <= n; i++) {
-            if (i == n || A[i] != A[lasti]) {
-                int step = i - lasti - 1;
-                move(A, n, i, step);
-                n -= step;
-                i -= step;
-                lasti = i;
-            }
-        }
-        return n;
-    }
-    
-    private void move(int[] a, int n, int index, int moveStep){
-        for(int i = index; i < n; i++){
-            a[i - moveStep] = a[i];
-        }
-    }
-}
-
-public class Solution {
-    public int removeDuplicates(int[] A) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int lastI = 0;
         int realI = 0;
         for(int i = 0; i <= A.length; i++){
@@ -37,4 +12,21 @@ public class Solution {
         }
         return realI;
     }
+}
+
+/**
+ * @time: 2013-08-31
+ */
+public class Solution {
+    public int removeDuplicates(int[] A) {
+        int n = A.length;
+        int distinctCount = 0;
+        
+        for(int i = 0; i < n; i++){
+            if(distinctCount == 0 || A[i] != A[distinctCount - 1]){
+                A[distinctCount++] = A[i];
+            }
+        }
+        return distinctCount;
+    }   
 }

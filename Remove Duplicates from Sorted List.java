@@ -25,3 +25,22 @@ public class Solution {
         return head;
     }
 }
+
+
+public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ListNode p1 = head;
+        ListNode p2 = head;
+        while(p2 != null){
+            if(p2.val != p1.val){
+                p1.next = p2;
+                p1 = p1.next;
+            }
+            p2 = p2.next;
+            p1.next = null;
+        }
+        return head;
+    }
+}

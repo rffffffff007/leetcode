@@ -1,64 +1,47 @@
+/**
+ * @time: 2013-08-31
+ */
 public class Solution {
     public ArrayList<ArrayList<Integer>> permuteUnique(int[] num) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        int len = num.length;
-        Integer[] n = new Integer[len];
-        for (int i = 0; i < len; i++) {
-            n[i] = i;
-        }
-        Set<ArrayList<Integer>> set = new HashSet<ArrayList<Integer>>();
-        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        Arrays.sort(num);
         do {
             ArrayList<Integer> list = new ArrayList<Integer>();
-            for (Integer i : n) {
-                list.add(num[i]);
-            }
-            set.add(list);
-        } while (nextPermutation(n));
-        res.addAll(set);
-        Collections.sort(res, new Comparator<ArrayList<Integer>>() {
-            public int compare(ArrayList<Integer> a, ArrayList<Integer> b) {
-                for (int i = 0; i < a.size(); i++) {
-                    if (a.get(i) != b.get(i)) {
-                        return a.get(i) - b.get(i);
-                    }
-                }
-                return 0;
-            }
-        });
-        return res;
+            for (int i : num)
+                list.add(i);
+            result.add(list);
+        } while (nextPermutation(num));
+        return result;
     }
 
-    private boolean nextPermutation(Integer[] n) {
-        int len = n.length;
-        int i = len - 2;
-        for (; i >= 0; i--) {
-            if (n[i] < n[i + 1]) {
+    private boolean nextPermutation(int[] num) {
+        int n = num.length;
+        int descStart = 0;
+        for (int i = n - 1; i > 0; i--) {
+            if (num[i] > num[i - 1]) {
+                descStart = i;
                 break;
             }
         }
-        if (i == -1) {
+        if (descStart == 0)
             return false;
-        }
-        int minj = -1;
-        for (int j = i + 1; j < len; j++) {
-            if (n[j] > n[i] && (minj == -1 || n[j] < n[minj])) {
-                minj = j;
+        for (int i = n - 1; i >= descStart; i--) {
+            if (num[i] > num[descStart - 1]){
+                swap(num, i, descStart - 1);
+                break;
             }
         }
-        swap(n, i, minj);
-        reverse(n, i + 1, len - 1);
+        reverse(num, descStart, n - 1);
         return true;
     }
 
-    private void reverse(Integer[] n, int s, int e) {
+    private void reverse(int[] n, int s, int e) {
         for (; s < e; s++, e--) {
             swap(n, s, e);
         }
     }
 
-    private void swap(Integer[] n, int i, int j) {
+    private void swap(int[] n, int i, int j) {
         int tmp = n[i];
         n[i] = n[j];
         n[j] = tmp;

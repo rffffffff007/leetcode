@@ -1,3 +1,7 @@
+/**
+ * Use no extra space.
+ * Time complexity is O(n)
+ */
 public class Solution {
     public void connect(TreeLinkNode root) {
         // Start typing your Java solution below
@@ -18,7 +22,6 @@ public class Solution {
                     if (last != curr)
                         last.next = curr;
                 } else {
-                    // root is the left-most node of next row.
                     root = curr;
                 }
                 last = curr;
@@ -26,6 +29,46 @@ public class Solution {
                     node = node.next;
                 }
             }
+        }
+    }
+}
+
+/**
+ * @time: 2013-08-31
+ * Use a queue to do bfs. 
+ * Time complexity and space complexity are both O(n)
+ *
+ * Definition for binary tree with next pointer.
+ * public class TreeLinkNode {
+ *     int val;
+ *     TreeLinkNode left, right, next;
+ *     TreeLinkNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(root == null)
+            return;
+        Queue<TreeLinkNode> queue = new LinkedList<TreeLinkNode>();
+        queue.offer(root);
+        int leftCount = 1;
+        TreeLinkNode last = null;
+        while(!queue.isEmpty()){
+            if(leftCount == 0){
+                leftCount = queue.size();
+                last = null;
+            }
+            TreeLinkNode node = queue.poll();
+            leftCount--;
+            if(node.left != null)
+                queue.offer(node.left);
+            if(node.right != null)
+                queue.offer(node.right);
+            if(last != null)
+                last.next = node;
+            last = node;
         }
     }
 }
