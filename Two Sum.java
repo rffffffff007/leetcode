@@ -3,46 +3,24 @@ public class Solution {
         // Start typing your Java solution below
         // DO NOT write main() function
         int n = numbers.length;
-        Node[] nodes = new Node[n];
-        for (int i = 0; i < n; i++) {
-            nodes[i] = new Node(i + 1, numbers[i]);
+        Map<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
+        for(int i = 0; i < n; i++){
+            int num = numbers[i];
+            if(!map.containsKey(num))
+                map.put(num, new ArrayList<Integer>());
+            map.get(num).add(i);
         }
-        Arrays.sort(nodes, new Comparator<Node>() {
-            public int compare(Node a, Node b) {
-                return a.val - b.val;
-            }
-        });
-        int a = 0;
-        int b = n - 1;
-        int[] res = new int[2];
-        int val;
-        while (a < b) {
-            val = nodes[a].val + nodes[b].val;
-            if (val > target) {
-                b--;
-            } else if (val < target) {
-                a++;
-            } else {
-                break;
+        for(int i = 0; i < n; i++){
+            int num = numbers[i];
+            if(map.containsKey(target - num)){
+                List<Integer> list = map.get(target - num);
+                if(num == target - num && list.size() < 2)
+                    continue;
+                int[] res = new int[]{i + 1, list.get(list.size() - 1) + 1};
+                Arrays.sort(res);
+                return res;
             }
         }
-        res[0] = nodes[a].index;
-        res[1] = nodes[b].index;
-        if (res[0] > res[1]) {
-            int tmp = res[0];
-            res[0] = res[1];
-            res[1] = tmp;
-        }
-        return res;
-    }
-
-    class Node {
-        int val;
-        int index;
-
-        public Node(int i, int v) {
-            index = i;
-            val = v;
-        }
+        return null;
     }
 }

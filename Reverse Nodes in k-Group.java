@@ -13,56 +13,35 @@ public class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
         // Start typing your Java solution below
         // DO NOT write main() function
-
-        // prevNi, ni, ..., nj, nextNj
-        ListNode ni = null, nj = head, prevNi = null, nextNj = head, tmp = null;
-        for (int i = 1; i < k; i++) {
-            if (nj == null) {
-                return head;
-            }
-            nj = nj.next;
+        int len = 0;
+        ListNode p = head;
+        while(p != null){
+            len++;
+            p = p.next;
         }
-
-        while (nj != null) {
-            if (prevNi == null) {
-                ni = nextNj;
-            } else {
-                ni = prevNi.next;
-            }
-            if (ni == nextNj) {
-                nextNj = nj.next;
-                nj.next = null;
-                reverseList(ni);
-                if (prevNi != null) {
-                    prevNi.next = nj;
-                } else {
-                    head = nj;
-                }
-                ni.next = nextNj;
-                tmp = ni;
-                ni = nj;
-                nj = tmp;
-            }
-
-            prevNi = ni;
-            nj = nj.next;
+        p = head;
+        ListNode tail = null;
+        for(int i = 0; i < len / k; i++){
+            ListNode start = reverse(p, k);
+            if(i == 0)
+                head = start;
+            if(tail != null)
+                tail.next = start;
+            tail = p;
+            p = p.next;
         }
-
         return head;
     }
-
-    private ListNode reverseList(ListNode head) {
-        if (head == null)
-            return null;
-        ListNode p = head, q = head.next, r;
-        while (q != null) {
-            r = q.next;
-            q.next = p;
-            p = q;
-            q = r;
+    
+    private ListNode reverse(ListNode head, int n){
+        ListNode node = head, prev = null, next = null;
+        for(int i = 0; i < n; i++){
+            next = node.next;
+            node.next = prev;
+            prev = node;
+            node = next;
         }
-        return p;
+        head.next = node;
+        return prev;
     }
-
-
 }

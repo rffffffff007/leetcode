@@ -11,21 +11,18 @@ public class Solution {
     public boolean isSymmetric(TreeNode root) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        if (root == null) {
+        if(root == null)
             return true;
-        } else {
-            return isSameReverse(root.left, root.right);
-        }
+        return isSymmtric(root.left, root.right);
     }
-
-    private boolean isSameReverse(TreeNode a, TreeNode b) {
-        if (a == null && b == null) {
+    
+    private boolean isSymmtric(TreeNode n1, TreeNode n2){
+        if(n1 == null && n2 == null)
             return true;
-        } else if (a != null && b != null) {
-            return a.val == b.val && isSameReverse(a.left, b.right)
-                    && isSameReverse(a.right, b.left);
-        } else {
+        else if(n1 == null || n2 == null)
             return false;
+        else{
+            return n1.val == n2.val && isSymmtric(n1.left, n2.right) & isSymmtric(n1.right, n2.left);
         }
     }
 }

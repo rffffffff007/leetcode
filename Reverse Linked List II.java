@@ -1,4 +1,5 @@
 /**
+ * @time: 2013-08-31
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
@@ -13,51 +14,30 @@ public class Solution {
     public ListNode reverseBetween(ListNode head, int m, int n) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        ListNode mNode = null;
-        ListNode mNodePrev = null;
-        ListNode nNode = head;
-        ListNode nNodeNext = null;
-
-        for (int i = 0; i < n - m; i++) {
-            nNode = nNode.next;
+        ListNode mp = head;
+        ListNode mpPrev = null;
+        for(int i = 1; i < m; i++){
+            mpPrev = mp;
+            mp = mp.next;
         }
-
-        for (int i = 1; i < m; i++) {
-            nNode = nNode.next;
-            if (mNodePrev == null)
-                mNodePrev = head;
-            else
-                mNodePrev = mNodePrev.next;
-        }
-
-        if (mNodePrev == null) {
-            mNode = head;
+        mp = reverse(mp, n - m + 1);
+        if(mpPrev != null){
+            mpPrev.next = mp;
+            return head;
         } else {
-            mNode = mNodePrev.next;
+            return mp;
         }
-        nNodeNext = nNode.next;
-        nNode.next = null;
-
-        reverseList(mNode);
-        if (mNodePrev != null) {
-            mNodePrev.next = nNode;
-        } else {
-            head = nNode;
-        }
-        mNode.next = nNodeNext;
-
-        return head;
     }
-
-    private void reverseList(ListNode head) {
-        if (head == null)
-            return;
-        ListNode p = head, q = head.next, r;
-        while (q != null) {
-            r = q.next;
-            q.next = p;
-            p = q;
-            q = r;
+    
+    private ListNode reverse(ListNode head, int n){
+        ListNode node = head, prev = null, next = null;
+        for(int i = 0; i < n; i++){
+            next = node.next;
+            node.next = prev;
+            prev = node;
+            node = next;
         }
+        head.next = node;
+        return prev;
     }
 }

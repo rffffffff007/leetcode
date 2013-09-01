@@ -1,4 +1,5 @@
 /**
+ * @time: 2013-08-31
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
@@ -13,39 +14,37 @@ public class Solution {
     public ListNode rotateRight(ListNode head, int n) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        if(head == null || n == 0)
-            return head;
-        ListNode p, end = null, rp1 = null, rp2 = null;
-        p = head;
+        if(head == null)
+            return null;
+        ListNode p = head, q = head, end;
         int len = 0;
         while(p != null){
             len++;
-            if(p.next == null){
-                end = p;
-            }
+            end = p;
             p = p.next;
-        }
-        if(len == 0){
-            return head;
         }
         n %= len;
-        n = len - n;
+        int count = 0;
         p = head;
-        int k = 1;
-        while(rp1 == null){
-            if(k++ == n){
-                rp1 = p;
-                if(p.next != null){
-                    rp2 = p.next;
-                }else{
-                    rp2 = head;
-                }
+        q = null;
+        while(p != null){
+            if(count >= n){
+                if(q == null)
+                    q = head;
+                else
+                    q = q.next;
             }
+            count++;
             p = p.next;
         }
-        end.next = head;
-        rp1.next = null;
         
-        return rp2;
+        ListNode tail = q.next;
+        q.next = null;
+        if(tail == null)
+            return head;
+        else{
+            end.next = head;
+            return tail;
+        }
     }
 }
