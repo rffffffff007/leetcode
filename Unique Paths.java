@@ -1,3 +1,25 @@
+/**
+ * @time: 2013-09-02
+ */
+public class Solution {
+    public int uniquePaths(int m, int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        long x = Math.min(m, n) - 1;
+        long y = Math.max(m, n) - 1;
+        
+        long ways = 1;
+        // return (x+y)! / x! / y!
+        for(long i = y + 1; i <= x + y; i++){
+            ways *= i;
+        }
+        for(long i = 1; i <= x; i++){
+            ways /= i;
+        }
+        return (int)ways;
+    }
+}
+
 public class Solution {
     public int uniquePaths(int m, int n) {
         // Start typing your Java solution below

@@ -23,10 +23,4 @@ public class Solution {
         }
         return sb.toString();
     }
-
-    public static void main(String[] args) {
-        Solution s = new Solution();
-
-        System.out.println(s.simplifyPath("/.buu"));
-    }
 }
