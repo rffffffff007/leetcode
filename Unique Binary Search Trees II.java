@@ -11,33 +11,27 @@ public class Solution {
     public ArrayList<TreeNode> generateTrees(int n) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        return generateTrees(1, n);
+        return generateTrees(n, 1);
     }
-
-    public ArrayList<TreeNode> generateTrees(int start, int n) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        ArrayList<TreeNode> res = new ArrayList<TreeNode>();
-        if (n == 0) {
-            res.add(null);
-        } else if (n == 1) {
-            res.add(new TreeNode(start));
-        } else {
-            for (int i = start; i < start + n; i++) {
-                ArrayList<TreeNode> left = generateTrees(start, i - start);
-                ArrayList<TreeNode> right = generateTrees(i + 1, n + start - 1
-                        - i);
-                for (TreeNode lNode : left) {
-                    for (TreeNode rNode : right) {
-                        TreeNode node = new TreeNode(i);
-                        node.left = lNode;
-                        node.right = rNode;
-                        res.add(node);
-                    }
+    
+    public ArrayList<TreeNode> generateTrees(int n, int start) {
+        ArrayList<TreeNode> result = new ArrayList<TreeNode>();
+        if(n == 0){
+            result.add(null);
+            return result;
+        }
+        for(int i = start; i < start + n; i++){
+            List<TreeNode> left = generateTrees(i - start, start);
+            List<TreeNode> right = generateTrees(n + start - i - 1, i + 1);
+            for(TreeNode l : left){
+                for(TreeNode r : right){
+                    TreeNode root = new TreeNode(i);
+                    root.left = l;
+                    root.right = r;
+                    result.add(root);
                 }
             }
         }
-
-        return res;
+        return result;
     }
 }

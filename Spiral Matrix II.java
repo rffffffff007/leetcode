@@ -31,3 +31,37 @@ public class Solution {
     }
 
 }
+
+public class Solution {
+    public int[][] generateMatrix(int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int[][] matrix = new int[n][n];
+        generate(n, 0, matrix, 1);
+        return matrix;
+    }
+
+    private static final int[][] DIRS = new int[][] { { 0, 1 }, { 1, 0 },
+            { 0, -1 }, { -1, 0 } };
+
+    private void generate(int n, int k, int[][] matrix, int start) {
+        if (n == k)
+            return;
+        int x = k;
+        int y = k;
+        int subn = n - 2 * k;
+        int numCount = 4 * subn - 4;
+        if (subn == 1)
+            numCount = 1;
+        int dirI = 0;
+        for (int i = 0; i < numCount; i++) {
+            matrix[x][y] = start++;
+            if (subn > 1 && i > 0 && i % (subn - 1) == 0)
+                dirI++;
+            int[] dir = DIRS[dirI];
+            x += dir[0];
+            y += dir[1];
+        }
+        generate(n, k + 1, matrix, start);
+    }
+}

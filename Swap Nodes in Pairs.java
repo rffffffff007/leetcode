@@ -13,25 +13,17 @@ public class Solution {
     public ListNode swapPairs(ListNode head) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        if(head == null){
-            return head;
+        ListNode empty = new ListNode(0);
+        empty.next = head;
+        ListNode prev = empty;
+        while(prev.next != null && prev.next.next != null){
+            ListNode p = prev.next;
+            ListNode q = p.next;
+            p.next = q.next;
+            q.next = p;
+            prev.next = q;
+            prev = p;
         }
-        ListNode p1, p2, p3;
-        p1 = null;
-        p2 = head;
-        p3 = head.next;
-        while(p3 != null){
-            p2.next = p3.next;
-            p3.next = p2;
-            if(p1 != null){
-                p1.next = p3;
-            }else{
-                head = p3;
-            }
-            p1 = p2;
-            p2 = p2.next;
-            p3 = p2 != null ? p2.next : null;
-        }
-        return head;
+        return empty.next;
     }
 }

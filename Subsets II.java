@@ -1,42 +1,38 @@
-import java.util.*;
 public class Solution {
-    public ArrayList<ArrayList<Integer>> subsetsWithDup(int[] S) {
+    public ArrayList<ArrayList<Integer>> subsetsWithDup(int[] num) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
-        Set<ArrayList<Integer>> set = new HashSet<ArrayList<Integer>>();
-        Arrays.sort(S);
-        int n = S.length;
-        if (n == 0) {
-            res.add(new ArrayList<Integer>());
-            return res;
-        }
-        int[] f = new int[n];
-        do {
-            ArrayList<Integer> list = new ArrayList<Integer>();
-            for (int i = 0; i < n; i++) {
-                if (f[i] == 1) {
-                    list.add(S[i]);
-                }
+        Arrays.sort(num);
+        Map<Integer, Integer> freqMap = new TreeMap<Integer, Integer>();
+        for (int n : num) {
+            if (freqMap.containsKey(n)) {
+                freqMap.put(n, freqMap.get(n) + 1);
+            } else {
+                freqMap.put(n, 1);
             }
-            set.add(list);
-        } while (plusOne(f));
-        res.addAll(set);
-        return res;
+        }
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        List<Integer> freqKeys = new ArrayList<Integer>();
+        freqKeys.addAll(freqMap.keySet());
+        allSubsets(freqMap, freqKeys, 0, new ArrayList<Integer>(), result);
+        return result;
     }
 
-    private boolean plusOne(int[] f) {
-        f[0] += 1;
-        int v;
-        for (int i = 0; i < f.length; i++) {
-            v = f[i] / 2;
-            if (i < f.length - 1) {
-                f[i + 1] += v;
-            } else if (v == 1) {
-                return false;
-            }
-            f[i] %= 2;
+    private void allSubsets(Map<Integer, Integer> freqMap, List<Integer> keys,
+            int k, List<Integer> list, ArrayList<ArrayList<Integer>> result) {
+        if (k == keys.size()) {
+            result.add(new ArrayList<Integer>(list));
+            return;
         }
-        return true;
+        int num = keys.get(k);
+        int freq = freqMap.get(num);
+        for (int i = 0; i <= freq; i++) {
+            if (i > 0)
+                list.add(num);
+            allSubsets(freqMap, keys, k + 1, list, result);
+        }
+        for (int i = 0; i < freq; i++) {
+            list.remove(list.size() - 1);
+        }
     }
 }

@@ -1,50 +1,43 @@
 public class Solution {
     public ArrayList<Integer> findSubstring(String S, String[] L) {
-        int wordsCount = L.length;
-        ArrayList<Integer> res = new ArrayList<Integer>();
-        if (wordsCount == 0) {
-            return res;
-        }
-        HashMap<String, Integer> lMap = new HashMap<String, Integer>();
-        HashMap<String, Integer> curMap = new HashMap<String, Integer>();
-        for (String s : L) {
-            addHashMap(lMap, s);
-        }
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int lens = S.length();
+        int lenl = L.length;
+        ArrayList<Integer> subPos = new ArrayList<Integer>();
+        if (lenl == 0)
+            return subPos;
         int wordLen = L[0].length();
-        int totalLen = wordsCount * wordLen;
-        int sLen = S.length();
-        int j = 0;
-        for (int i = 0; i <= sLen - totalLen; i++) {
-            curMap.clear();
-            for (j = 0; j < wordsCount; j++) {
-                String str = S
-                        .substring(i + j * wordLen, i + (j + 1) * wordLen);
-                if (lMap.containsKey(str)) {
-                    addHashMap(curMap, str);
+        int totalLen = wordLen * lenl;
+        Map<String, Integer> lMap = new HashMap<String, Integer>();
+        Map<String, Integer> sMap = new HashMap<String, Integer>();
+        for (String l : L)
+            addMap(lMap, l);
+        for (int i = 0; i <= lens - totalLen; i++) {
+            sMap.clear();
+            int j = i;
+            for (; j < i + totalLen; j += wordLen) {
+                String sub = S.substring(j, j + wordLen);
+                if (lMap.containsKey(sub)) {
+                    addMap(sMap, sub);
+                    if (sMap.get(sub) > lMap.get(sub))
+                        break;
                 } else {
                     break;
                 }
-                Integer curCount = curMap.get(str);
-                Integer lCount = lMap.get(str);
-                if (lCount == null || curCount > lCount) {
-                    break;
-                }
             }
-            if (j == wordsCount) {
-                // success
-                res.add(i);
+            if (j == i + totalLen) {
+                subPos.add(i);
             }
         }
-        return res;
+        return subPos;
     }
 
-    private void addHashMap(Map<String, Integer> map, String s) {
-        Integer count = map.get(s);
-        if (count == null) {
-            count = 1;
+    private void addMap(Map<String, Integer> map, String key) {
+        if (map.containsKey(key)) {
+            map.put(key, map.get(key) + 1);
         } else {
-            count++;
+            map.put(key, 1);
         }
-        map.put(s, count);
     }
 }
