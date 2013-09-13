@@ -25,3 +25,21 @@ public class Solution {
         return res;
     }
 }
+
+public class Solution {
+    public ArrayList<Integer> getRow(int rowIndex) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int k = rowIndex;
+        int[] row = new int[k + 1];
+        for (int i = 0; i <= k; i++) {
+            row[0] = row[i] = 1;
+            for (int j = i - 1; j > 0; j--)
+                row[j] = row[j] + row[j - 1];
+        }
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        for (int i : row)
+            res.add(i);
+        return res;
+    }
+}
