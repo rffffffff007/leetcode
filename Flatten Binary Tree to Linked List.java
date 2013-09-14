@@ -7,28 +7,6 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
-    public void flatten(TreeNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        Stack<TreeNode> stack = new Stack<TreeNode>();
-        if (root != null)
-            stack.push(root);
-        while (stack.size() > 0) {
-            TreeNode n = stack.pop();
-            if (n.right != null)
-                stack.push(n.right);
-            if (n.left != null)
-                stack.push(n.left);
-            if (n != root) {
-                root.right = n;
-                root.left = null;
-                root = root.right;
-            }
-        }
-    }
-}
-
 /**
  * @time: 2013-08-28
  */
@@ -60,7 +38,7 @@ public class Solution {
 }
 
 /**
- * @time: 2013-08-28
+ * @time: 2013-09-14
  */
 public class Solution {
     public void flatten(TreeNode root) {
@@ -69,27 +47,17 @@ public class Solution {
         getTailAndFlatten(root);
     }
     
-    private TreeNode getTailAndFlatten(TreeNode root){
-        if(root == null)
+    private TreeNode getTailAndFlatten(TreeNode tail){
+        if(tail == null)
             return null;
-        TreeNode tail = root;
-        TreeNode left = root.left;
-        TreeNode right = root.right;
-        root.left = null;
-        
-        TreeNode leftTail = getTailAndFlatten(left);
-        tail.right = left;
-        if(leftTail != null)
-            tail = leftTail;
-        
-        TreeNode rightTail = getTailAndFlatten(right);
+        TreeNode right = tail.right;
+        tail.right = tail.left;
+        tail.left = null;
+        if(tail.right != null)
+            tail = getTailAndFlatten(tail.right);
         tail.right = right;
-        if(rightTail != null)
-            tail = rightTail;
-        
+        if(tail.right != null)
+            tail = getTailAndFlatten(tail.right);
         return tail;
-        
     }
-    
-    
 }
