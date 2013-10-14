@@ -92,24 +92,19 @@ public class Solution {
     private void dfsWordLadder(Node node, Node endNode, int maxStep,
             List<ArrayList<Node>> passMap, ArrayList<String> list,
             ArrayList<ArrayList<String>> res) {
-        if (list.size() == maxStep) {
+        if (list.size() == maxStep) 
             return;
-        }
+        
         list.add(node.val);
         node.visited = true;
         if (node == endNode) {
             ArrayList<String> newList = new ArrayList<String>();
             newList.addAll(list);
             res.add(newList);
-            list.remove(list.size() - 1);
-            node.visited = false;
-            return;
-        }
-
-        for (Node nextNode : passMap.get(node.index)) {
-            if (!nextNode.visited && list.size() == nextNode.step - 1) {
-                dfsWordLadder(nextNode, endNode, maxStep, passMap, list, res);
-            }
+        } else {
+            for (Node nextNode : passMap.get(node.index)) 
+                if (!nextNode.visited && list.size() == nextNode.step - 1) 
+                    dfsWordLadder(nextNode, endNode, maxStep, passMap, list, res);
         }
         list.remove(list.size() - 1);
         node.visited = false;
