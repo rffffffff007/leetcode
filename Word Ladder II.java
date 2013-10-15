@@ -1,148 +1,153 @@
 public class Solution {
     public ArrayList<ArrayList<String>> findLadders(String start, String end,
             HashSet<String> dict) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        
-        int n = 0;
-        // make node list.
-        ArrayList<Node> dicts = new ArrayList<Node>();
-        Node startNode = new Node(n++, start);
-        dicts.add(startNode);
-        for (String s : dict) {
-            dicts.add(new Node(n++, s));
-        }
-        Node endNode = new Node(n++, end);
-        dicts.add(endNode);
-
-        List<ArrayList<Node>> passMap = makeMap(dicts);
-        
-        bfsWordLadder(passMap, dicts);
-
-        int maxStep = endNode.step;
-        for (Node node : dicts) {
-            node.visited = false;
-        }
-
-        ArrayList<String> list = new ArrayList<String>();
-        ArrayList<ArrayList<String>> res = new ArrayList<ArrayList<String>>();
-        dfsWordLadder(startNode, endNode, maxStep, passMap, list, res);
-        return res;
+        // bfs get search path.
+        Map<String, List<String>> last = bfsPaths(start, end, dict);
+        // dfs get all shortest path
+        ArrayList<ArrayList<String>> paths = new ArrayList<ArrayList<String>>();
+        dfsPaths(end, start, last, new ArrayList<String>(), paths);
+        return paths;
     }
 
-    private List<ArrayList<Node>> makeMap(ArrayList<Node> dicts) {
-        int n = dicts.size();
-        List<ArrayList<Node>> passMap = new ArrayList<ArrayList<Node>>();
-        for (int i = 0; i < n; i++) {
-            passMap.add(new ArrayList<Node>());
-        }
-
-        ArrayList<Node> sortArray = new ArrayList<Node>();
-        sortArray.addAll(dicts);
-        int wordLen = dicts.get(0).val.length();
-        NodeComparator comparator = new NodeComparator();
-        for (int maskIndex = 0; maskIndex < wordLen; maskIndex++) {
-            comparator.mask = maskIndex;
-            Collections.sort(sortArray, comparator);
-            int lastj = 0;
-            for (int i = 1; i <= n; i++) {
-                if (i == n
-                        || comparator.compare(sortArray.get(i),
-                                sortArray.get(lastj)) != 0) {
-                    for (int j = lastj; j < i; j++) {
-                        for (int k = j + 1; k < i; k++) {
-                            passMap.get(sortArray.get(j).index).add(
-                                    sortArray.get(k));
-                            passMap.get(sortArray.get(k).index).add(
-                                    sortArray.get(j));
+    // Use builded graph to perform bfs.
+    private Map<String, List<String>> bfsPaths(String start, String end,
+            Set<String> dict) {
+        Set<String> visited = new HashSet<String>();
+        Set<String> newAdded = new HashSet<String>();
+        Queue<String> queue = new LinkedList<String>();
+        queue.offer(start);
+        int leftCount = 0;
+        Map<String, List<String>> last = new HashMap<String, List<String>>();
+        Map<String, List<String>> graph = buildGraph(dict);
+        while (!queue.isEmpty()) {
+            if (leftCount == 0) {
+                leftCount = queue.size();
+                if (newAdded.contains(end)) {
+                    break;
+                }
+                visited.addAll(newAdded);
+                newAdded.clear();
+            }
+            String node = queue.poll();
+            leftCount--;
+            List<String> adj = graph.get(node);
+            if (adj != null)
+                for (String str : adj)
+                    if (!visited.contains(str)) {
+                        if (!newAdded.contains(str)) {
+                            queue.offer(str);
+                            newAdded.add(str);
                         }
+                        addMap(last, str, node);
                     }
-                    lastj = i;
-                }
-            }
         }
-        return passMap;
+        return last;
     }
 
-    private void bfsWordLadder(List<ArrayList<Node>> passMap,
-            ArrayList<Node> dicts) {
-        int n = dicts.size();
-        Node startNode = dicts.get(0);
-        Queue<Node> queue = new LinkedList<Node>();
-        startNode.visited = true;
-        startNode.step = 1;
-        queue.offer(startNode);
-
-        Node nodei = null;
-        while (queue.size() > 0) {
-            nodei = queue.poll();
-            if (nodei.index == n - 1) {
-                break;
-            }
-            for (Node nodej : passMap.get(nodei.index)) {
-                if (!nodej.visited) {
-                    nodej.visited = true;
-                    nodej.step = nodei.step + 1;
-                    queue.offer(nodej);
+    // Iterate all possible path to perform bfs.
+    private Map<String, List<String>> bfsPaths2(String start, String end,
+            Set<String> dict) {
+        Set<String> visited = new HashSet<String>();
+        Set<String> newAdded = new HashSet<String>();
+        Queue<String> queue = new LinkedList<String>();
+        queue.offer(start);
+        int leftCount = 0;
+        Map<String, List<String>> last = new HashMap<String, List<String>>();
+        while (!queue.isEmpty()) {
+            if (leftCount == 0) {
+                leftCount = queue.size();
+                if (newAdded.contains(end)) {
+                    break;
                 }
+                visited.addAll(newAdded);
+                newAdded.clear();
+            }
+            String node = queue.poll();
+            leftCount--;
+            char[] cs = node.toCharArray();
+            for (int i = 0; i < cs.length; i++) {
+                char tmp = cs[i];
+                for (char c = 'a'; c <= 'z'; c++) {
+                    if (c == tmp)
+                        continue;
+                    cs[i] = c;
+                    String str = new String(cs);
+                    if (dict.contains(str) && !visited.contains(str)) {
+                        if (!newAdded.contains(str)) {
+                            queue.offer(str);
+                            newAdded.add(str);
+                        }
+                        addMap(last, str, node);
+                    }
+                }
+                cs[i] = tmp;
             }
         }
+        return last;
     }
 
-    private void dfsWordLadder(Node node, Node endNode, int maxStep,
-            List<ArrayList<Node>> passMap, ArrayList<String> list,
-            ArrayList<ArrayList<String>> res) {
-        if (list.size() == maxStep) 
-            return;
-        
-        list.add(node.val);
-        node.visited = true;
-        if (node == endNode) {
-            ArrayList<String> newList = new ArrayList<String>();
-            newList.addAll(list);
-            res.add(newList);
+    private void dfsPaths(String end, String start,
+            Map<String, List<String>> last, ArrayList<String> path,
+            ArrayList<ArrayList<String>> paths) {
+        path.add(end);
+        if (end.equals(start)) {
+            ArrayList<String> cpath = new ArrayList<String>();
+            cpath.addAll(path);
+            Collections.reverse(cpath);
+            paths.add(cpath);
         } else {
-            for (Node nextNode : passMap.get(node.index)) 
-                if (!nextNode.visited && list.size() == nextNode.step - 1) 
-                    dfsWordLadder(nextNode, endNode, maxStep, passMap, list, res);
+            if (last.containsKey(end))
+                for (String next : last.get(end)) {
+                    dfsPaths(next, start, last, path, paths);
+                }
         }
-        list.remove(list.size() - 1);
-        node.visited = false;
+        path.remove(path.size() - 1);
     }
 
-    class NodeComparator implements Comparator<Node> {
+    // use sort to build the graph
+    private Map<String, List<String>> buildGraph(Set<String> dict) {
+        List<String> nodes = new ArrayList<String>();
+        Map<String, List<String>> graph = new HashMap<String, List<String>>();
+        nodes.addAll(dict);
+        int wordLen = nodes.get(0).length();
+        int n = nodes.size();
+        NodeComparator cmp = new NodeComparator();
+        for (int maski = 0; maski < wordLen; maski++) {
+            cmp.mask = maski;
+            Collections.sort(nodes, cmp);
+            int lasti = 0;
+            for (int i = 0; i <= n; i++) {
+                if (i == n || cmp.compare(nodes.get(i), nodes.get(lasti)) != 0) {
+                    for (int x = lasti; x < i; x++)
+                        for (int y = lasti; y < i; y++)
+                            if (x != y)
+                                addMap(graph, nodes.get(x), nodes.get(y));
+                    lasti = i;
+                }
+            }
+        }
+        return graph;
+    }
+    
+    private class NodeComparator implements Comparator<String> {
         int mask = -1;
 
         @Override
-        public int compare(Node a, Node b) {
-            char ca, cb;
-            for (int i = 0; i < a.val.length(); i++) {
-                ca = a.val.charAt(i);
-                cb = b.val.charAt(i);
-                if (i != mask && ca != cb) {
-                    return ca - cb;
-                }
-            }
+        public int compare(String a, String b) {
+            for (int i = 0; i < a.length(); i++)
+                if (i != mask && a.charAt(i) != b.charAt(i))
+                    return a.charAt(i) - b.charAt(i);
             return 0;
         }
     }
 
-    private class Node {
-        int index;
-        String val;
-        int step;
-        boolean visited;
-
-        public Node(int index, String val) {
-            this.index = index;
-            this.val = val;
-            this.step = 0;
-            visited = false;
-        }
-
-        @Override
-        public String toString() {
-            return val;
+    private void addMap(Map<String, List<String>> map, String a, String b) {
+        if (map.containsKey(a)) {
+            map.get(a).add(b);
+        } else {
+            List<String> list = new ArrayList<String>();
+            list.add(b);
+            map.put(a, list);
         }
     }
 }
