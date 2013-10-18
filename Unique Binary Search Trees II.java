@@ -9,8 +9,6 @@
  */
 public class Solution {
     public ArrayList<TreeNode> generateTrees(int n) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         return generateTrees(n, 1);
     }
     

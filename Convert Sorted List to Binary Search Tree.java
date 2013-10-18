@@ -1,5 +1,4 @@
 /**
- * @time: 2013-08-27
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
@@ -18,34 +17,30 @@
  */
 public class Solution {
     public TreeNode sortedListToBST(ListNode head) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        ListNode root = new ListNode(0);
-        root.next = head;
-        int len = getListLen(head);
-        return listToBST(root, len);
+        int len = length(head);        
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        return buildTree(dummy, len);
     }
     
-    private int getListLen(ListNode head){
-        int count = 0;
-        while(head != null){
-            count++;
-            head = head.next;
-        }
-        return count;
-    }
-    
-    private TreeNode listToBST(ListNode root, int len){
-        if(len == 0 || root.next == null)
+    private TreeNode buildTree(ListNode dummy, int len){
+        if(dummy.next == null || len <= 0)
             return null;
-        int leftLen = (len - 1) / 2;
-        int rightLen = len - 1 - leftLen;
-        
-        TreeNode left = listToBST(root, leftLen);
-        TreeNode node = new TreeNode(root.next.val);
-        root.next = root.next.next;
-        node.left = left;
-        node.right = listToBST(root, rightLen);
+        int leftLen = len / 2;
+        TreeNode node = new TreeNode(0);
+        node.left = buildTree(dummy, leftLen);
+        node.val = dummy.next.val;
+        dummy.next = dummy.next.next;
+        node.right = buildTree(dummy, len - leftLen - 1);
         return node;
+    }
+    
+    private int length(ListNode root){
+        int len = 0;
+        while(root != null){
+            len++;
+            root = root.next;
+        }
+        return len;
     }
 }

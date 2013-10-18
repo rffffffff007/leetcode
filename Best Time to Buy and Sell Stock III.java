@@ -1,25 +1,20 @@
-
 /**
  * @time: 2013-08-13
  */
 public class Solution {
     public int maxProfit(int[] prices) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         List<Integer> ps = new ArrayList<Integer>();
         int last = Integer.MIN_VALUE;
         // remove duplicate prices.
         for(int p : prices){
-            if(p != last){
+            if(p != last)
                 ps.add(p);
-            }
             last = p;
         }
         int n = ps.size();
         prices = new int[n];
-        for(int i = 0; i < n; i++){
+        for(int i = 0; i < n; i++)
             prices[i] = ps.get(i);
-        }
         
         int[] minLeft = new int[n];
         int[] maxRight = new int[n];
@@ -53,9 +48,6 @@ public class Solution {
 
 public class Solution {
     public int maxProfit(int[] prices) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        
         // only record the header and footer of acsending sequence.
         List<Integer> pList = new ArrayList<Integer>();
         int lastIndex = 0;

@@ -1,5 +1,4 @@
 /**
- * @time: 2013-08-30
  * Use a PriorityQueue(a min heap) to solve this. O(n * k * log(k))
  * 
  * Definition for singly-linked list.
@@ -14,8 +13,6 @@
  */
 public class Solution {
     public ListNode mergeKLists(ArrayList<ListNode> lists) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int n = Math.max(lists.size(), 1);
         PriorityQueue<ListNode> pq = new PriorityQueue<ListNode>(n,
                 new Comparator<ListNode>() {
@@ -24,24 +21,19 @@ public class Solution {
                     }
                 });
 
-
         for (ListNode node : lists)
             if (node != null)
                 pq.offer(node);
 
-        ListNode root = null;
-        ListNode rootPointer = null;
+        ListNode dummy = new ListNode(0);
+        ListNode p = dummy;
         while (!pq.isEmpty()) {
             ListNode minNode = pq.poll();
             if (minNode.next != null)
                 pq.offer(minNode.next);
-            if (root == null) {
-                root = rootPointer = minNode;
-            } else {
-                rootPointer.next = minNode;
-                rootPointer = minNode;
-            }
+            p.next = minNode;
+            p = p.next;
         }
-        return root;
+        return dummy.next;
     }
 }

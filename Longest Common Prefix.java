@@ -4,8 +4,6 @@
  */
 public class Solution {
     public String longestCommonPrefix(String[] strs) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         if(strs.length == 0)
             return "";
         int len = strs[0].length();
@@ -13,15 +11,13 @@ public class Solution {
         for(; i < len; i++){
             char c = strs[0].charAt(i);
             boolean allSame = true;
-            for(String s : strs){
+            for(String s : strs)
                 if(s.length() <= i || s.charAt(i) != c){
                     allSame = false;
                     break;
                 }
-            }
-            if(!allSame){
+            if(!allSame)
                 break;
-            }
         }
         return strs[0].substring(0, i);
     }

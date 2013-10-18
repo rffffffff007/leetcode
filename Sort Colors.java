@@ -1,7 +1,5 @@
 public class Solution {
     public void sortColors(int[] A) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int n = A.length;
         int i0 = 0, i1 = 0;
         int i2 = n - 1;

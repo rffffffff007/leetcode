@@ -11,8 +11,6 @@
  */
 public class Solution {
     public ListNode deleteDuplicates(ListNode head) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         ListNode p1;
         p1 = head;
         while (p1 != null) {
@@ -29,8 +27,6 @@ public class Solution {
 
 public class Solution {
     public ListNode deleteDuplicates(ListNode head) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         ListNode p1 = head;
         ListNode p2 = head;
         while(p2 != null){

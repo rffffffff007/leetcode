@@ -3,8 +3,6 @@
  */
 public class Solution {
     public void rotate(int[][] matrix) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         // b[x][y] = a[n-1-y][x]
         int n = matrix.length;
         int ni = n / 2;

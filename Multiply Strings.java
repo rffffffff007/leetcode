@@ -3,8 +3,6 @@
  */
 public class Solution {
     public String multiply(String num1, String num2) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         char[] cs1 = num1.toCharArray();
         char[] cs2 = num2.toCharArray();
         reverse(cs1);
@@ -53,8 +51,6 @@ public class Solution {
 
 public class Solution {
     public String multiply(String num1, String num2) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         char[] cs1 = num1.toCharArray();
         char[] cs2 = num2.toCharArray();
         offset(cs1, -'0');

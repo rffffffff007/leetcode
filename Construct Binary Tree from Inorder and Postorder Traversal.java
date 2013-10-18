@@ -9,27 +9,20 @@
  */
 public class Solution {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        return buildTree(inorder, 0, inorder.length, postorder, 0, postorder.length);
+        return buildTree(inorder, 0, postorder, 0, inorder.length);
     }
     
-    private TreeNode buildTree(int [] in, int is, int ie, int[] post, int ps, int pe){
-        if(is == ie){
+    private TreeNode buildTree(int[] in, int is, int[] post, int ps, int len){
+        if(len == 0)
             return null;
-        }
-        int val = post[pe - 1];
-        TreeNode node = new TreeNode(val);
-        int index = -1;
-        for(int i = is; i < ie; i++){
-            if(in[i] == val){
-                index = i;
+        int val = post[ps + len - 1];
+        int lenLeft = 0;
+        for(;lenLeft < len; lenLeft++)
+            if(in[is + lenLeft] == val)
                 break;
-            }
-        }
-        int lenl = index - is;
-        node.left = buildTree(in, is, index, post, ps, ps + lenl);
-        node.right = buildTree(in, index + 1, ie, post, ps + lenl, pe - 1);
+        TreeNode node = new TreeNode(val);
+        node.left = buildTree(in, is, post, ps, lenLeft);
+        node.right = buildTree(in, is + lenLeft + 1, post, ps + lenLeft, len - 1 - lenLeft);
         return node;
     }
 }

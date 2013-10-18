@@ -1,7 +1,5 @@
 public class Solution {
     public boolean isValid(String s) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         char[] cs = s.toCharArray();
         Map<Character, Character> paraMap = new HashMap<Character, Character>();
         paraMap.put('(', ')');

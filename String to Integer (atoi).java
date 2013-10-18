@@ -1,7 +1,5 @@
 public class Solution {
     public int atoi(String str) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         if (str == null)
             return 0;
         str = str.trim();
