@@ -4,8 +4,6 @@
  */
 public class Solution {
     public boolean isScramble(String s1, String s2) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int n = s1.length();
         if(n != s2.length())
             return false;
@@ -21,9 +19,8 @@ public class Solution {
                         res |= dp[i][j][m] && dp[i + m][j + m][k - m];
                         res |= dp[i][j + k - m][m] && dp[i + m][j][k - m];
                     }
-                    if(k == 1){
+                    if(k == 1)
                         res = s1.charAt(i) == s2.charAt(j);
-                    }
                     dp[i][j][k] = res;
                 }
             }
@@ -33,10 +30,7 @@ public class Solution {
 }
 
 public class Solution {
-
     public boolean isScramble(String s1, String s2) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int n1 = s1.length();
         int n2 = s2.length();
         if (n1 != n2) {

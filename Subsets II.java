@@ -1,7 +1,5 @@
 public class Solution {
     public ArrayList<ArrayList<Integer>> subsetsWithDup(int[] num) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         Arrays.sort(num);
         Map<Integer, Integer> freqMap = new TreeMap<Integer, Integer>();
         for (int n : num) {

@@ -2,8 +2,6 @@ public class Solution {
     static final int N = 9;
 
     public boolean isValidSudoku(char[][] board) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         return validSudoku(board);
     }
 
@@ -19,33 +17,27 @@ public class Solution {
             set3.clear();
             for (int j = 0; j < N; j++) {
                 c = board[i][j];
-                if (Character.isDigit(c)) {
-                    if (!set1.contains(c)) {
+                if (Character.isDigit(c)) 
+                    if (!set1.contains(c)) 
                         set1.add(c);
-                    } else {
+                    else 
                         return false;
-                    }
-                }
 
                 c = board[j][i];
-                if (Character.isDigit(c)) {
-                    if (!set2.contains(c)) {
+                if (Character.isDigit(c)) 
+                    if (!set2.contains(c)) 
                         set2.add(c);
-                    } else {
+                    else
                         return false;
-                    }
-                }
 
                 xi = i / 3 * 3 + j / 3;
                 yi = i % 3 * 3 + j % 3;
                 c = board[xi][yi];
-                if (Character.isDigit(c)) {
-                    if (!set3.contains(c)) {
+                if (Character.isDigit(c)) 
+                    if (!set3.contains(c))
                         set3.add(c);
-                    } else {
+                    else
                         return false;
-                    }
-                }
             }
         }
         return true;

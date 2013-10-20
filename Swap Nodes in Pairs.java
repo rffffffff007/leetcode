@@ -11,19 +11,16 @@
  */
 public class Solution {
     public ListNode swapPairs(ListNode head) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        ListNode empty = new ListNode(0);
-        empty.next = head;
-        ListNode prev = empty;
-        while(prev.next != null && prev.next.next != null){
-            ListNode p = prev.next;
-            ListNode q = p.next;
-            p.next = q.next;
-            q.next = p;
-            prev.next = q;
-            prev = p;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode p = dummy;
+        while(p.next != null && p.next.next != null){
+            ListNode q = p.next.next;
+            p.next.next = q.next;
+            q.next = p.next;
+            p.next = q;
+            p = p.next.next;
         }
-        return empty.next;
+        return dummy.next;
     }
 }

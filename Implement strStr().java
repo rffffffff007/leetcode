@@ -1,7 +1,5 @@
 public class Solution {
     public String strStr(String haystack, String needle) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int index = 0;
         String s1 = haystack;
         String s2 = needle;

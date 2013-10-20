@@ -11,26 +11,26 @@
  */
 public class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
+        int len = listLen(head);
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode p = dummy;
+        for(int i = 0; i < len / k; i++){
+            ListNode q = reverse(p.next, k);
+            ListNode next = p.next;
+            p.next = q;
+            p = next;
+        }
+        return dummy.next;
+    }
+    
+    private int listLen(ListNode p){
         int len = 0;
-        ListNode p = head;
         while(p != null){
             len++;
             p = p.next;
         }
-        p = head;
-        ListNode tail = null;
-        for(int i = 0; i < len / k; i++){
-            ListNode start = reverse(p, k);
-            if(i == 0)
-                head = start;
-            if(tail != null)
-                tail.next = start;
-            tail = p;
-            p = p.next;
-        }
-        return head;
+        return len;
     }
     
     private ListNode reverse(ListNode head, int n){

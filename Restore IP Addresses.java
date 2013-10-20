@@ -3,8 +3,6 @@ public class Solution {
     static final int IP_LEN = 3;
 
     public ArrayList<String> restoreIpAddresses(String s) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         ArrayList<String> res = new ArrayList<String>();
         char[] cs = s.toCharArray();
         searchIp(cs, 0, new int[4], res);
@@ -22,9 +20,8 @@ public class Solution {
                 int s = i == 0 ? 0 : ipIndexs[i - 1];
                 int e = ipIndexs[i];
                 sb.append(cs, s, e - s);
-                if (i != IP_COUNT - 1) {
+                if (i != IP_COUNT - 1) 
                     sb.append('.');
-                }
             }
             res.add(sb.toString());
             return;
@@ -43,9 +40,8 @@ public class Solution {
         int n = e - s;
         if (n == 0 || n > IP_LEN)
             return false;
-        if (cs[s] == '0') {
+        if (cs[s] == '0') 
             return n == 1;
-        }
         int sum = 0;
         for (int i = s; i < e; i++) {
             sum *= 10;
@@ -53,5 +49,4 @@ public class Solution {
         }
         return sum <= 255;
     }
-
 }

@@ -4,8 +4,6 @@
  */
 public class Solution {
     public void connect(TreeLinkNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         TreeLinkNode node = null;
         TreeLinkNode last = null, curr = null;
         TreeLinkNode rowHead = root;
@@ -48,8 +46,6 @@ public class Solution {
  */
 public class Solution {
     public void connect(TreeLinkNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         if(root == null)
             return;
         Queue<TreeLinkNode> queue = new LinkedList<TreeLinkNode>();

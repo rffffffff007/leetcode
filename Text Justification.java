@@ -1,7 +1,5 @@
 public class Solution {
     public ArrayList<String> fullJustify(String[] words, int L) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int wordsCount = words.length;
         ArrayList<String> result = new ArrayList<String>();
         int curLen = 0;

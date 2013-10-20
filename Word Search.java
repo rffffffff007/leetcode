@@ -1,7 +1,5 @@
 public class Solution {
     public boolean exist(char[][] board, String word) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int n = board.length;
         int m = n > 0 ? board[0].length : 0;
         for(int x = 0; x < n; x++){

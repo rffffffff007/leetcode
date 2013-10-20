@@ -1,12 +1,9 @@
 public class Solution {
     public String simplifyPath(String path) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         String[] paths = path.split("/");
         Stack<String> stack = new Stack<String>();
         for (String s : paths) {
             if (s.equals(".")) {
-
             } else if (s.equals("..")) {
                 if (!stack.isEmpty())
                     stack.pop();
@@ -15,12 +12,10 @@ public class Solution {
             }
         }
         StringBuilder sb = new StringBuilder();
-        for (String s : stack) {
+        for (String s : stack) 
             sb.append("/" + s);
-        }
-        if (sb.length() == 0) {
+        if (sb.length() == 0) 
             sb.append("/");
-        }
         return sb.toString();
     }
 }

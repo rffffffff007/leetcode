@@ -1,7 +1,5 @@
 public class Solution {
     public int[] twoSum(int[] numbers, int target) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int n = numbers.length;
         Map<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
         for(int i = 0; i < n; i++){

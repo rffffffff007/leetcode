@@ -1,11 +1,5 @@
-/**
- * @time: 2013-08-29
- * Reduce to max rectange in histogram 
- */ 
 public class Solution {
     public int maximalRectangle(char[][] matrix) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int n = matrix.length;
         if(n == 0)
             return 0;

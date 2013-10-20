@@ -1,7 +1,5 @@
 public class Solution {
     public boolean isMatch(String s, String p) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         if (s.length() * p.length() < 1000000) {
             matchArray = new short[s.length() + 1][p.length() + 1];
         }
@@ -42,13 +40,8 @@ public class Solution {
     }
 }
 
-/**
- * @time: 2013-08-22
- */ 
 public class Solution {
 	public boolean isMatch(String s, String p) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
 		char[] cs = s.toCharArray();
 		char[] cp = p.toCharArray();
 		int lens = cs.length;
@@ -74,6 +67,6 @@ public class Solution {
 	}
 
 	private boolean charMatch(char a, char b) {
-		return a == b || a == '?' || b == '?' || a == '*' || b == '*';
+		return a == b || b == '?' || b == '*';
 	}
 }

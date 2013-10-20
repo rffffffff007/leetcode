@@ -4,8 +4,6 @@
  */
 public class Solution {
     public boolean isInterleave(String s1, String s2, String s3) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int l1 = s1.length();
         int l2 = s2.length();
         int l3 = s3.length();
@@ -38,8 +36,6 @@ public class Solution {
  */ 
 public class Solution {
     public boolean isInterleave(String s1, String s2, String s3) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int len1 = s1.length();
         int len2 = s2.length();
         int len = s3.length();

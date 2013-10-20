@@ -1,10 +1,5 @@
-/**
- * @time: 2013-08-30
- */
 public class Solution {
     public ArrayList<String[]> solveNQueens(int n) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         ArrayList<String[]> res = new ArrayList<String[]>();
         solveNQ(n, 0, new int[n], res);
         return res;

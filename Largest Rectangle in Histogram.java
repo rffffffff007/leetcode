@@ -1,10 +1,5 @@
-/**
- * @time: 2013-08-28
- */
 public class Solution {
     public int largestRectangleArea(int[] height) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int n = height.length;
         int stackTop = 0;
         int[] hStack = new int[n];
@@ -16,9 +11,9 @@ public class Solution {
             while(stackTop > 0 &&(i == n || hStack[stackTop - 1] >= height[i])){
                 // pop the stack top to main the ascending order in hStack.
                 stackTop--;
-                int h = hStack[stackTop]
-                bitItemsCount += bStack[stackTop];
-                maxArea = Math.max(maxArea, h * bigItemsCOunt);
+                int h = hStack[stackTop];
+                bigItemsCount += bStack[stackTop];
+                maxArea = Math.max(maxArea, h * bigItemsCount);
             }
             if(i < n){
                 // insert the new item to stack

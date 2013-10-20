@@ -1,16 +1,10 @@
-/**
- * @time: 2013-08-27
- */
 public class Solution {
     public int minDistance(String word1, String word2) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         char[] cs1 = word1.toCharArray();
         char[] cs2 = word2.toCharArray();
         int len1 = cs1.length;
         int len2 = cs2.length;
         int[][] minDis = new int[len1][len2];
-        
         for(int i = 0; i < len1; i++){
             for(int j = 0; j < len2; j++){
                 int dis = Integer.MAX_VALUE;
@@ -23,7 +17,6 @@ public class Solution {
                 minDis[i][j] = dis;
             }
         }
-        
         return dist(minDis, len1 - 1, len2 - 1);
     }
     

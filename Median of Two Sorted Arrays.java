@@ -44,8 +44,6 @@ public class Solution {
  */
 public class Solution {
     public double findMedianSortedArrays(int A[], int B[]) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int m = A.length;
         int n = B.length;
         int median1 = (m + n) / 2 + 1;

@@ -1,11 +1,5 @@
-/**
- * @time: 2013-08-30
- * O(n)
- */
 public class Solution {
     public String minWindow(String S, String T) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int lens = S.length();
         int lent = T.length();
 

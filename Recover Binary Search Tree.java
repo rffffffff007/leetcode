@@ -10,9 +10,6 @@
  */
 public class Solution {
     public void recoverTree(TreeNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        
         // Use stack to perform a inorder traversal
         // Find one or two descending points.
         Stack<TreeNode> stack = new Stack<TreeNode>();
@@ -38,7 +35,6 @@ public class Solution {
                         rightNode = node;
                     }
                 }
-                
                 node = node.right;
             }
         }
@@ -53,8 +49,6 @@ public class Solution {
 
 public class Solution {
     public void recoverTree(TreeNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         TreeNode result = new TreeNode(0);
         inorder(root, null, result);
         if(result.left != null){
@@ -84,6 +78,6 @@ public class Solution {
         }
         // here node is the largest parent node in its right child.
         TreeNode rightLast = inorder(node.right, node, result);
-        return rightLast == null ? last : rightLast;
+        return rightLast == null ? node : rightLast;
     }
 }

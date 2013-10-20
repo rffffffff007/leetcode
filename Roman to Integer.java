@@ -1,7 +1,5 @@
 public class Solution {
     public int romanToInt(String s) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         Map<Character, Integer> romans = new HashMap<Character, Integer>();
         romans.put('I', 1);
         romans.put('V', 5);

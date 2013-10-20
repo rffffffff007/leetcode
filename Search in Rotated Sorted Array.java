@@ -4,8 +4,6 @@
  */
 public class Solution {
     public int search(int[] A, int target) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int n = A.length;
         int offset = searchOffset(A, 0, n);
         int res = bsearch(A, target, 0, n, offset);
@@ -16,13 +14,10 @@ public class Solution {
 
     private int searchOffset(int[] a, int s, int e) {
         int len = e - s;
-        if (len <= 1 || a[s] < a[e - 1]) {
+        if (len <= 1 || a[s] < a[e - 1]) 
             return s;
-        } else if (len == 2) {
-            return s + 1;
-        }
 
-        int mid = (s + e) / 2;
+        int mid = (s + e - 1) / 2;
         if (a[s] > a[mid])
             return searchOffset(a, s, mid + 1);
         else
@@ -31,9 +26,8 @@ public class Solution {
     }
 
     private int bsearch(int[] a, int target, int s, int e, int offset) {
-        if (s == e) {
+        if (s == e) 
             return - 1;
-        }
         int n = a.length;
         int mid = (s + e) / 2;
         int midVal = a[(mid + offset) % n];

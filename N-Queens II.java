@@ -3,22 +3,18 @@
  */
 public class Solution {
     public int totalNQueens(int n) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         return solveNQ(n, 0, new int[n]);
     }
 
     private int solveNQ(int n, int row, int[] queens) {
-        if (row == n) {
+        if (row == n) 
             return 1;
-        }
         int sum = 0;
-        for (int col = 0; col < n; col++) {
+        for (int col = 0; col < n; col++) 
             if (fit(n, queens, row, col)) {
                 queens[row] = col;
                 sum += solveNQ(n, row + 1, queens);
             }
-        }
         return sum;
     }
 

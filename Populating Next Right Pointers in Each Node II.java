@@ -4,8 +4,6 @@
  */
 public class Solution {
     public void connect(TreeLinkNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         TreeLinkNode node;
         TreeLinkNode last = null, curr = null;
         while (root != null) {
@@ -13,21 +11,18 @@ public class Solution {
             last = null;
             curr = null;
             while (node != null) {
-                if (node.left != null && curr != node.left) {
+                if (node.left != null && curr != node.left) 
                     curr = node.left;
-                } else if (node.right != null) {
+                else if (node.right != null) 
                     curr = node.right;
-                }
                 if (last != null) {
                     if (last != curr)
                         last.next = curr;
-                } else {
+                } else 
                     root = curr;
-                }
                 last = curr;
-                if (node.right == null || curr == node.right) {
+                if (node.right == null || curr == node.right) 
                     node = node.next;
-                }
             }
         }
     }
@@ -47,8 +42,6 @@ public class Solution {
  */
 public class Solution {
     public void connect(TreeLinkNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         if(root == null)
             return;
         Queue<TreeLinkNode> queue = new LinkedList<TreeLinkNode>();

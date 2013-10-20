@@ -13,8 +13,6 @@ public class Solution {
     }
     
     public ArrayList<String> letterCombinations(String digits) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         char[] cs = new char[digits.length()];
         ArrayList<String> res = new ArrayList<String>();
         appendDigits(digits, 0, cs, res);

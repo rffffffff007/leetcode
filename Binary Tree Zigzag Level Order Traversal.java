@@ -9,8 +9,6 @@
  */
 public class Solution {
     public ArrayList<ArrayList<Integer>> zigzagLevelOrder(TreeNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
         dfs(root, 0, res);
         for(int i = 0; i < res.size(); i++){
@@ -36,29 +34,20 @@ public class Solution {
     }
 }
 
-
-/**
- * @time: 2013-08-27
- */
 public class Solution {
     public ArrayList<ArrayList<Integer>> zigzagLevelOrder(TreeNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        if (root == null) {
-            return result;
-        }
         Deque<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.add(root);
-        int nodesLeft = 1;
-
-        ArrayList<Integer> row = new ArrayList<Integer>();
-        boolean reverse = false;
+        if(root != null)
+            queue.add(root);
+        int nodesLeft = 0;
+        ArrayList<Integer> row = null;
+        boolean reverse = true;
         while (!queue.isEmpty()) {
             if (nodesLeft == 0) {
                 nodesLeft = queue.size();
-                result.add(row);
                 row = new ArrayList<Integer>();
+                result.add(row);
                 reverse = !reverse;
             }
             TreeNode node = null;
@@ -80,8 +69,6 @@ public class Solution {
                     queue.addFirst(node.left);
             }
         }
-
-        result.add(row);
         return result;
     }
 }

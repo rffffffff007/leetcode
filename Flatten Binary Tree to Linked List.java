@@ -7,13 +7,8 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-/**
- * @time: 2013-08-28
- */
 public class Solution {
     public void flatten(TreeNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         Stack<TreeNode> stack = new Stack<TreeNode>();
         TreeNode cur = root;
         TreeNode tail = null;
@@ -37,13 +32,8 @@ public class Solution {
     }
 }
 
-/**
- * @time: 2013-09-14
- */
 public class Solution {
     public void flatten(TreeNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         getTailAndFlatten(root);
     }
     

@@ -1,10 +1,5 @@
-/**
- * @time: 2013-08-31
- */
 public class Solution {
     public boolean isMatch(String s, String p) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         char[] cs = s.toCharArray();
         char[] ps = p.toCharArray();
         int lens = cs.length;
@@ -29,11 +24,10 @@ public class Solution {
                 }
                 if (i * j > 0 && (cs[i - 1] == ps[j - 1] || ps[j - 1] == '.')) {
                     match[i][j] |= match[i - 1][j - 1];
-                    if (isStar[j - 1]) {
+                    if (isStar[j - 1]) 
                         match[i][j] |= match[i - 1][j];
-                        match[i][j] |= match[i][j - 1];
-                    }
-                } else if (j > 0 && isStar[j - 1]) {
+                } 
+                if (j > 0 && isStar[j - 1]) {
                     match[i][j] |= match[i][j - 1];
                 }
             }
@@ -48,8 +42,6 @@ public class Solution {
 
 public class Solution {
     public boolean isMatch(String s, String p) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         char[] as = s.toCharArray();
         char[] bs = p.toCharArray();
         for (int i = 0; i < bs.length; i++) {

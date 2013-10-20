@@ -1,5 +1,4 @@
 /**
- * @time: 2013-08-29
  * Definition for an interval.
  * public class Interval {
  *     int start;
@@ -10,8 +9,6 @@
  */
 public class Solution {
     public ArrayList<Interval> merge(ArrayList<Interval> intervals) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         Collections.sort(intervals, new Comparator<Interval>(){
             public int compare(Interval a, Interval b){
                 return a.start - b.start;

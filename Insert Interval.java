@@ -1,5 +1,4 @@
 /**
- * @time: 2013-08-28
  * Definition for an interval.
  * public class Interval {
  *     int start;
@@ -10,8 +9,6 @@
  */
 public class Solution {
     public ArrayList<Interval> insert(ArrayList<Interval> intervals, Interval newInterval) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int n = intervals.size();
         int left = bsearch(intervals, newInterval.start, 0, intervals.size());
         int right = bsearch(intervals, newInterval.end, 0, intervals.size());

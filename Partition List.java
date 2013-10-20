@@ -12,8 +12,6 @@
  */
 public class Solution {
     public ListNode partition(ListNode head, int x) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         ListNode left = new ListNode(0);
         ListNode right = new ListNode(0);
         ListNode lp = left;

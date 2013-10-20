@@ -1,6 +1,3 @@
-/**
- * @time: 2013-08-31
- */
 public class Solution {
     public void rotate(int[][] matrix) {
         // b[x][y] = a[n-1-y][x]

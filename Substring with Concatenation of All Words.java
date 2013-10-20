@@ -1,7 +1,5 @@
 public class Solution {
     public ArrayList<Integer> findSubstring(String S, String[] L) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         int lens = S.length();
         int lenl = L.length;
         ArrayList<Integer> subPos = new ArrayList<Integer>();
@@ -22,22 +20,19 @@ public class Solution {
                     addMap(sMap, sub);
                     if (sMap.get(sub) > lMap.get(sub))
                         break;
-                } else {
+                } else 
                     break;
-                }
             }
-            if (j == i + totalLen) {
+            if (j == i + totalLen) 
                 subPos.add(i);
-            }
         }
         return subPos;
     }
 
     private void addMap(Map<String, Integer> map, String key) {
-        if (map.containsKey(key)) {
+        if (map.containsKey(key)) 
             map.put(key, map.get(key) + 1);
-        } else {
+        else 
             map.put(key, 1);
-        }
     }
 }

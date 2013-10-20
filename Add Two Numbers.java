@@ -11,38 +11,26 @@
  */
 public class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         ListNode n1 = l1;
         ListNode n2 = l2;
         while (n1 != null || n2 != null) {
-            if (n2 != null) {
+            if (n2 != null) 
                 n1.val += n2.val;
-            }
-            if (n1.next == null && (n1.val >= 10 || n2 != null && n2.next != null)) {
+            if (n1.next == null && (n1.val >= 10 || n2 != null && n2.next != null)) 
                 n1.next = new ListNode(0);
-            }
-            if (n1.next != null) {
+            if (n1.next != null) 
                 n1.next.val += n1.val / 10;
-            }
             n1.val %= 10;
             n1 = n1.next;
-            if (n2 != null) {
+            if (n2 != null) 
                 n2 = n2.next;
-            }
         }
         return l1;
     }
 }
 
-
-/**
- * @time: 2013-08-26
- */
 public class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         ListNode root = null;
         ListNode cur = null, next = null;
         while(l1 != null || l2 != null){
@@ -67,9 +55,8 @@ public class Solution {
             cur.val %= 10;
             if(l1 == null && l2 == null){
                 // reach the last node, delete the last 0 node.
-                if(cur.next.val == 0){
+                if(cur.next.val == 0)
                     cur.next = null;
-                }
             }
             cur = cur.next;
         }

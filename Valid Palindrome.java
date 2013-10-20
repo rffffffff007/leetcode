@@ -1,20 +1,15 @@
 public class Solution {
     public boolean isPalindrome(String s) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         char[] cs = s.toLowerCase().toCharArray();
         int a = 0;
         int b = cs.length - 1;
         while(a < b){
-            while(a < b && !isLetter(cs[a])){
+            while(a < b && !isLetter(cs[a]))
                 a++;
-            }
-            while(a < b && !isLetter(cs[b])){
+            while(a < b && !isLetter(cs[b]))
                 b--;
-            }
-            if(cs[a] != cs[b]){
+            if(cs[a] != cs[b])
                 return false;
-            }
             a++;
             b--;
         }
