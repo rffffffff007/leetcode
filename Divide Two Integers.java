@@ -1,9 +1,11 @@
 public class Solution {
+    private long negative(long a) {
+        return (a ^ -1) + 1;
+    }
+    
     public int divide(int dividend, int divisor) {
         long a = Math.abs((long) dividend);
         long b = Math.abs((long) divisor);
-        long flaga = dividend > 0 ? 1 : -1;
-        long flagb = divisor > 0 ? 1 : -1;
         while ((b << 1) <= a) 
             b <<= 1;
         long c = 0;
@@ -17,6 +19,9 @@ public class Solution {
             }
             b >>= 1;
         }
-        return (int) (c * flaga * flagb);
+        c = dividend < 0 ? negative(c) : c;
+        c = divisor < 0 ? negative(c) : c;
+        c = c > Integer.MAX_VALUE ? Integer.MAX_VALUE : c;
+        return (int) c;
     }
 }
